@@ -187,6 +187,13 @@
             font-weight: 800;
             color: var(--primary-color);
             text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .nav-logo img {
+            height: 50px;
         }
 
         .nav-menu {
@@ -195,7 +202,7 @@
         }
 
         .nav-menu li {
-            margin-left: var(--spacing-lg);
+            margin-left: var(--spacing-xl); /* Augmentation de l'espacement */
         }
 
         .nav-menu a {
@@ -225,6 +232,7 @@
         .user-actions {
             display: flex;
             align-items: center;
+            gap: var(--spacing-md); /* Ajout d'espace entre les boutons */
         }
 
         .user-actions .btn {
@@ -1123,6 +1131,10 @@
                 margin-right: 0;
                 margin-bottom: var(--spacing-md);
             }
+            
+            .nav-logo img {
+                height: 40px;
+            }
         }
     </style>
 </head>
@@ -1136,7 +1148,12 @@
     <!-- Navigation -->
     <nav id="main-nav">
         <div class="container nav-container">
-            <a href="#home" class="nav-logo">MONARKE</a>
+            <!-- Logo Monarke -->
+            <a href="#home" class="nav-logo">
+                <img src="https://i.ibb.co/0jQ7ZQD/monarke-logo.png" alt="Monarke Logo">
+                <span>MONARKE</span>
+            </a>
+            
             <ul class="nav-menu">
                 <li><a href="#home" class="nav-link">Accueil</a></li>
                 <li><a href="#destinations" class="nav-link">Destinations</a></li>
