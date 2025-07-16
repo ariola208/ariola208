@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BÉNIN MONARKE | Découvrez le Bénin - Guide Touristique Complet</title>
+    <title>MONARCHY | Découvrez le Bénin - Guide Touristique Complet</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Urbanist:wght@300;500;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
@@ -13,10 +13,9 @@
             --blanc: #FFFFFF;
             --gris: #2E2E2E;
             --gris-clair: #3A3A3A;
-            --accent: #D4AF37; /* Or royal */
-            --accent-fonce: #B8860B;
-            --vert: #2E8B57; /* Vert riche */
-            --rouge: #B22222; /* Rouge terreux */
+            --accent: #FFD700;
+            --accent-fonce: #E6C200;
+            --success: #4CAF50;
         }
         
         * {
@@ -31,30 +30,16 @@
             color: var(--blanc);
             line-height: 1.6;
             overflow-x: hidden;
-            background-image: url('https://images.unsplash.com/photo-1604881991720-f91add269bed?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
-            background-size: cover;
-            background-attachment: fixed;
-            background-position: center;
         }
         
-        .overlay-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.85);
-            z-index: -1;
-        }
-        
-        /* Logo BÉNIN MONARKE */
+        /* Logo MONARCHY */
         .logo {
             font-family: 'Montserrat', sans-serif;
             font-weight: 900;
-            font-size: clamp(2rem, 7vw, 4rem);
+            font-size: clamp(2.5rem, 8vw, 5rem);
             text-transform: uppercase;
-            letter-spacing: -0.05rem;
-            background: linear-gradient(90deg, var(--accent) 50%, transparent 50%);
+            letter-spacing: -0.1rem;
+            background: linear-gradient(90deg, var(--blanc) 50%, transparent 50%);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -62,22 +47,10 @@
             margin: 1rem 0;
             cursor: pointer;
             transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-        }
-        
-        .logo .flag {
-            display: inline-block;
-            width: 1.2em;
-            height: 0.8em;
-            background: linear-gradient(to right, #008751 33%, #FCD116 33% 66%, #E8112D 66%);
-            margin-right: 0.5rem;
-            border-radius: 2px;
-            box-shadow: 0 0 5px rgba(0,0,0,0.3);
         }
         
         .logo:hover {
-            letter-spacing: 0.05rem;
+            letter-spacing: 0.1rem;
         }
         
         /* Navigation */
@@ -91,7 +64,6 @@
             width: 100%;
             z-index: 1000;
             backdrop-filter: blur(10px);
-            border-bottom: 2px solid var(--accent);
         }
         
         .nav-links {
@@ -106,8 +78,6 @@
             font-size: 1.1rem;
             position: relative;
             padding: 0.5rem 0;
-            text-transform: uppercase;
-            letter-spacing: 1px;
         }
         
         .nav-links a::after {
@@ -144,7 +114,9 @@
             align-items: center;
             text-align: center;
             padding: 0 5%;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80') no-repeat center center/cover;
             position: relative;
+            overflow: hidden;
         }
         
         .hero::before {
@@ -154,16 +126,16 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.8) 100%);
-            z-index: -1;
+            background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.8) 100%);
         }
         
         .hero h2 {
             font-size: clamp(1.5rem, 4vw, 3rem);
             margin-bottom: 2rem;
             font-weight: 300;
-            max-width: 800px;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+            position: relative;
+            z-index: 2;
+            animation: fadeInDown 1s ease-out;
         }
         
         .cta-button {
@@ -176,31 +148,46 @@
             border-radius: 50px;
             transition: all 0.3s ease;
             border: 2px solid var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-size: 1.1rem;
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+            position: relative;
+            z-index: 2;
+            overflow: hidden;
+        }
+        
+        .cta-button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            z-index: -1;
         }
         
         .cta-button:hover {
             background-color: transparent;
             color: var(--accent);
-            transform: translateY(-3px);
+        }
+        
+        .cta-button:hover::after {
+            transform: translateX(0);
         }
         
         /* Sections communes */
         .section-header {
             text-align: center;
             margin-bottom: 3rem;
+            position: relative;
         }
         
         .section-title {
-            font-size: 2.5rem;
+            font-size: clamp(2rem, 5vw, 2.5rem);
             color: var(--accent);
             margin-bottom: 1rem;
             position: relative;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+            display: inline-block;
         }
         
         .section-title::after {
@@ -212,19 +199,34 @@
             width: 100px;
             height: 3px;
             background-color: var(--accent);
+            border-radius: 2px;
         }
         
         .section-subtitle {
-            font-size: 1.1rem;
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
             color: rgba(255,255,255,0.7);
             max-width: 700px;
             margin: 0 auto;
+            padding: 0 1rem;
         }
         
         /* Carte Interactive */
         .map-section {
             padding: 5rem 5%;
-            background-color: rgba(46, 46, 46, 0.9);
+            background-color: var(--gris);
+            position: relative;
+        }
+        
+        .map-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1519046904884-53103b34b206?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80') no-repeat center center/cover;
+            opacity: 0.05;
+            z-index: 0;
         }
         
         #benin-map {
@@ -233,7 +235,8 @@
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            border: 2px solid var(--accent);
+            position: relative;
+            z-index: 1;
         }
         
         /* Galerie */
@@ -242,7 +245,6 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 1.5rem;
-            background-color: rgba(58, 58, 58, 0.9);
         }
         
         .gallery-item {
@@ -251,13 +253,13 @@
             border-radius: 8px;
             height: 250px;
             cursor: pointer;
-            border: 2px solid var(--accent);
-            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
         }
         
         .gallery-item:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.4);
+            box-shadow: 0 10px 25px rgba(255,215,0,0.2);
         }
         
         .gallery-item img {
@@ -277,20 +279,32 @@
             left: 0;
             right: 0;
             background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
-            padding: 1rem;
+            padding: 1.5rem 1rem;
             color: white;
-            transform: translateY(0);
+            transform: translateY(100%);
             transition: transform 0.3s ease;
         }
         
         .gallery-item:hover .overlay {
-            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            transform: translateY(0);
         }
         
         /* Section Hôtels */
         .hotels-section {
             padding: 5rem 5%;
-            background-color: rgba(0,0,0,0.9);
+            background-color: var(--noir);
+            position: relative;
+        }
+        
+        .hotels-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80') no-repeat center center/cover;
+            opacity: 0.05;
         }
         
         .hotel-filters {
@@ -310,12 +324,34 @@
             cursor: pointer;
             transition: all 0.3s ease;
             font-weight: 500;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hotel-filter-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 215, 0, 0.1);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+            z-index: 0;
         }
         
         .hotel-filter-btn:hover,
         .hotel-filter-btn.active {
             background-color: var(--accent);
             color: var(--noir);
+        }
+        
+        .hotel-filter-btn:hover::after,
+        .hotel-filter-btn.active::after {
+            transform: scaleX(1);
+            transform-origin: left;
         }
         
         .hotels-container {
@@ -330,13 +366,13 @@
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
             transition: all 0.3s ease;
-            border: 1px solid rgba(212, 175, 55, 0.3);
+            position: relative;
+            z-index: 1;
         }
         
         .hotel-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3);
-            border-color: var(--accent);
+            box-shadow: 0 10px 25px rgba(255,215,0,0.2);
         }
         
         .hotel-image {
@@ -368,6 +404,7 @@
             display: flex;
             align-items: center;
             gap: 0.3rem;
+            z-index: 2;
         }
         
         .hotel-price {
@@ -379,6 +416,7 @@
             padding: 0.5rem 1rem;
             border-radius: 5px;
             font-weight: 700;
+            z-index: 2;
         }
         
         .hotel-content {
@@ -413,6 +451,9 @@
             gap: 0.3rem;
             font-size: 0.8rem;
             color: rgba(255,255,255,0.7);
+            background: rgba(255,255,255,0.1);
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
         }
         
         .hotel-footer {
@@ -446,10 +487,24 @@
             cursor: pointer;
             transition: all 0.3s ease;
             font-weight: 500;
+            position: relative;
+            overflow: hidden;
         }
         
-        .hotel-book-btn:hover {
-            background-color: var(--accent-fonce);
+        .hotel-book-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .hotel-book-btn:hover::after {
+            transform: translateX(0);
         }
         
         /* Reviews Section */
@@ -526,6 +581,8 @@
         .review-rating {
             color: var(--accent);
             margin-bottom: 0.8rem;
+            display: flex;
+            gap: 0.2rem;
         }
         
         .review-content {
@@ -606,7 +663,19 @@
         /* Blog Section */
         .blog-section {
             padding: 5rem 5%;
-            background-color: rgba(46, 46, 46, 0.9);
+            background-color: var(--gris);
+            position: relative;
+        }
+        
+        .blog-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80') no-repeat center center/cover;
+            opacity: 0.05;
         }
         
         .blog-container {
@@ -621,13 +690,13 @@
             border-radius: 10px;
             overflow: hidden;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid rgba(212, 175, 55, 0.3);
+            position: relative;
+            z-index: 1;
         }
         
         .blog-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3);
-            border-color: var(--accent);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
         }
         
         .blog-image {
@@ -680,11 +749,16 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            transition: color 0.3s ease;
         }
         
         .blog-read-more::after {
             content: '→';
             transition: transform 0.3s ease;
+        }
+        
+        .blog-read-more:hover {
+            color: var(--blanc);
         }
         
         .blog-read-more:hover::after {
@@ -728,7 +802,6 @@
             transition: transform 0.3s ease;
             max-height: 90vh;
             overflow-y: auto;
-            border: 2px solid var(--accent);
         }
         
         .booking-modal.active .booking-content {
@@ -824,14 +897,13 @@
         }
         
         .booking-price {
-            background-color: rgba(212, 175, 55, 0.1);
+            background-color: rgba(255,215,0,0.1);
             padding: 1rem;
             border-radius: 5px;
             margin: 1.5rem 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border: 1px solid rgba(212, 175, 55, 0.3);
         }
         
         .booking-price p {
@@ -877,10 +949,6 @@
             font-weight: 500;
         }
         
-        .booking-submit:hover {
-            background-color: var(--accent-fonce);
-        }
-        
         /* Modal de confirmation */
         .confirmation-modal {
             position: fixed;
@@ -913,7 +981,6 @@
             position: relative;
             transform: translateY(-20px);
             transition: transform 0.3s ease;
-            border: 2px solid var(--accent);
         }
         
         .confirmation-modal.active .confirmation-content {
@@ -947,14 +1014,22 @@
             font-weight: 500;
         }
         
-        .confirmation-close:hover {
-            background-color: var(--accent-fonce);
-        }
-        
         /* Formulaire Inscription/Connexion */
         .form-section {
             padding: 5rem 5%;
-            background-color: rgba(0,0,0,0.9);
+            background-color: var(--noir);
+            position: relative;
+        }
+        
+        .form-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1527631746610-bca00a040d60?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80') no-repeat center center/cover;
+            opacity: 0.05;
         }
         
         .form-container {
@@ -964,7 +1039,8 @@
             padding: 2rem;
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            border: 1px solid var(--accent);
+            position: relative;
+            z-index: 1;
         }
         
         .form-group {
@@ -1029,7 +1105,7 @@
             align-items: center;
             cursor: pointer;
             z-index: 1001;
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
             transition: all 0.3s ease;
         }
         
@@ -1051,6 +1127,10 @@
             z-index: 1001;
             overflow: hidden;
             border: 1px solid var(--accent);
+        }
+        
+        .ai-chatbox.active {
+            display: flex;
         }
         
         .ai-header {
@@ -1123,6 +1203,17 @@
             font-weight: bold;
         }
         
+        .typing-indicator {
+            display: flex;
+            gap: 4px;
+            padding: 10px 15px;
+            background-color: var(--gris-clair);
+            color: var(--blanc);
+            border-radius: 18px;
+            align-self: flex-start;
+            max-width: 80%;
+        }
+        
         .typing-indicator span {
             display: inline-block;
             width: 8px;
@@ -1180,16 +1271,19 @@
             top: 80px;
             right: 20px;
             background: rgba(0,0,0,0.7);
-            padding: 10px;
+            padding: 10px 15px;
             border-radius: 8px;
             z-index: 999;
             font-size: 0.9rem;
-            border: 1px solid var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            backdrop-filter: blur(5px);
         }
         
-        .weather-widget i {
+        .weather-icon {
+            font-size: 1.2rem;
             color: var(--accent);
-            margin-right: 5px;
         }
         
         /* PWA Install Prompt */
@@ -1204,7 +1298,13 @@
             border-radius: 50px;
             z-index: 1005;
             display: none;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        
+        #installContainer.active {
+            display: flex;
         }
         
         #installButton {
@@ -1213,6 +1313,7 @@
             color: var(--noir);
             font-weight: bold;
             cursor: pointer;
+            text-decoration: underline;
         }
         
         /* Footer */
@@ -1220,7 +1321,18 @@
             padding: 3rem 5%;
             background-color: var(--gris-clair);
             text-align: center;
-            border-top: 2px solid var(--accent);
+            position: relative;
+        }
+        
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1503917988258-f87a78e3c995?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80') no-repeat center center/cover;
+            opacity: 0.05;
         }
         
         .footer-links {
@@ -1235,6 +1347,27 @@
             color: var(--blanc);
             text-decoration: none;
             font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+        
+        .footer-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: var(--accent);
+            transition: width 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+        
+        .footer-links a:hover::after {
+            width: 100%;
         }
         
         .social-icons {
@@ -1257,6 +1390,34 @@
         footer p {
             color: rgba(255,255,255,0.7);
             font-size: 0.9rem;
+        }
+        
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
         }
         
         /* Responsive */
@@ -1333,7 +1494,6 @@
     </style>
 </head>
 <body>
-    <div class="overlay-bg"></div>
     <div id="app"></div>
     
     <!-- Scripts -->
@@ -1801,6 +1961,9 @@
                 this.aiChatbox = null;
                 this.map = null;
                 this.selectedRating = 0;
+                this.aiMessages = [];
+                this.typingIndicator = false;
+                this.weatherData = null;
                 
                 this.init();
             }
@@ -1810,7 +1973,8 @@
                 this.setupEventListeners();
                 this.setupMap();
                 this.updateTranslations();
-                this.setupWeather();
+                this.fetchWeather();
+                this.setupPWA();
             }
             
             createStructure() {
@@ -1819,10 +1983,12 @@
                 // Create PWA prompt
                 const installContainer = document.createElement('div');
                 installContainer.id = 'installContainer';
-                installContainer.className = 'hidden';
+                const installText = document.createElement('span');
+                installText.textContent = 'Installer l\'application MONARCHY';
                 const installButton = document.createElement('button');
                 installButton.id = 'installButton';
-                installButton.textContent = 'Install MONARCHY App';
+                installButton.textContent = 'Installer';
+                installContainer.appendChild(installText);
                 installContainer.appendChild(installButton);
                 app.appendChild(installContainer);
                 
@@ -1830,9 +1996,12 @@
                 const weatherWidget = document.createElement('div');
                 weatherWidget.className = 'weather-widget';
                 weatherWidget.id = 'weatherWidget';
+                const weatherIcon = document.createElement('i');
+                weatherIcon.className = 'weather-icon fas fa-sun';
                 const weatherContent = document.createElement('div');
                 weatherContent.id = 'weatherContent';
-                weatherContent.innerHTML = '<i class="fas fa-cloud-sun"></i> Loading weather...';
+                weatherContent.textContent = 'Chargement...';
+                weatherWidget.appendChild(weatherIcon);
                 weatherWidget.appendChild(weatherContent);
                 app.appendChild(weatherWidget);
                 
@@ -1854,7 +2023,7 @@
                 const nav = document.createElement('nav');
                 const logoDiv = document.createElement('div');
                 logoDiv.className = 'logo';
-                logoDiv.innerHTML = '<div class="flag"></div>BÉNIN MONARKE';
+                logoDiv.textContent = 'MONARCHY';
                 const hamburger = document.createElement('button');
                 hamburger.className = 'hamburger';
                 hamburger.id = 'hamburger';
@@ -1878,8 +2047,8 @@
                 hero.className = 'hero';
                 hero.id = 'home';
                 const heroLogo = document.createElement('h1');
-                heroLogo.className = 'logo';
-                heroLogo.innerHTML = '<div class="flag"></div>BÉNIN MONARKE';
+                heroLogo.className = 'logo pulse';
+                heroLogo.textContent = 'MONARCHY';
                 const heroHeading = document.createElement('h2');
                 heroHeading.dataset.i18n = 'welcome-heading';
                 heroHeading.textContent = 'Découvrez les trésors cachés du Bénin';
@@ -2169,35 +2338,6 @@
                 confirmationModal.appendChild(confirmationContent);
                 app.appendChild(confirmationModal);
                 
-                // Create footer
-                const footer = document.createElement('footer');
-                footer.id = 'contact';
-                const footerLinks = document.createElement('div');
-                footerLinks.className = 'footer-links';
-                ['home', 'map', 'gallery', 'hotels', 'blog', 'contact'].forEach(id => {
-                    const link = document.createElement('a');
-                    link.href = `#${id}`;
-                    link.dataset.i18n = `footer-${id}`;
-                    link.textContent = id.charAt(0).toUpperCase() + id.slice(1);
-                    footerLinks.appendChild(link);
-                });
-                const socialIcons = document.createElement('div');
-                socialIcons.className = 'social-icons';
-                const socialPlatforms = ['instagram', 'facebook', 'twitter', 'tiktok'];
-                socialPlatforms.forEach(platform => {
-                    const icon = document.createElement('a');
-                    icon.href = '#';
-                    icon.ariaLabel = platform;
-                    icon.innerHTML = `<i class="fab fa-${platform}"></i>`;
-                    socialIcons.appendChild(icon);
-                });
-                const copyright = document.createElement('p');
-                copyright.innerHTML = '&copy; 2023 BÉNIN MONARKE - <span data-i18n="footer-rights">Tous droits réservés</span>';
-                footer.appendChild(footerLinks);
-                footer.appendChild(socialIcons);
-                footer.appendChild(copyright);
-                app.appendChild(footer);
-                
                 // Create AI assistant
                 const aiButton = document.createElement('div');
                 aiButton.className = 'ai-assistant';
@@ -2242,10 +2382,40 @@
                 app.appendChild(aiButton);
                 app.appendChild(aiChatbox);
                 
+                // Create footer
+                const footer = document.createElement('footer');
+                footer.id = 'contact';
+                const footerLinks = document.createElement('div');
+                footerLinks.className = 'footer-links';
+                ['home', 'map', 'gallery', 'hotels', 'blog', 'contact'].forEach(id => {
+                    const link = document.createElement('a');
+                    link.href = `#${id}`;
+                    link.dataset.i18n = `footer-${id}`;
+                    link.textContent = id.charAt(0).toUpperCase() + id.slice(1);
+                    footerLinks.appendChild(link);
+                });
+                const socialIcons = document.createElement('div');
+                socialIcons.className = 'social-icons';
+                const socialPlatforms = ['instagram', 'facebook', 'twitter', 'tiktok'];
+                socialPlatforms.forEach(platform => {
+                    const icon = document.createElement('a');
+                    icon.href = '#';
+                    icon.ariaLabel = platform;
+                    icon.innerHTML = `<i class="fab fa-${platform}"></i>`;
+                    socialIcons.appendChild(icon);
+                });
+                const copyright = document.createElement('p');
+                copyright.innerHTML = '&copy; 2023 MONARCHY - <span data-i18n="footer-rights">Tous droits réservés</span>';
+                footer.appendChild(footerLinks);
+                footer.appendChild(socialIcons);
+                footer.appendChild(copyright);
+                app.appendChild(footer);
+                
                 // Store references to modals
                 this.bookingModal = bookingModal;
                 this.confirmationModal = confirmationModal;
                 this.aiChatbox = aiChatbox;
+                this.aiMessagesContainer = aiMessages;
             }
             
             createSectionHeader(titleKey, subtitleKey) {
@@ -2328,7 +2498,18 @@
                 
                 // AI assistant toggle
                 document.getElementById('ai-button').addEventListener('click', () => {
-                    this.aiChatbox.style.display = this.aiChatbox.style.display === 'flex' ? 'none' : 'flex';
+                    this.aiChatbox.classList.toggle('active');
+                });
+                
+                // AI send message
+                document.getElementById('ai-send').addEventListener('click', () => {
+                    this.sendAIMessage();
+                });
+                
+                document.getElementById('ai-query').addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        this.sendAIMessage();
+                    }
                 });
                 
                 // Close modals when clicking outside
@@ -2355,6 +2536,12 @@
                 
                 document.querySelector('.confirmation-close').addEventListener('click', () => {
                     this.confirmationModal.classList.remove('active');
+                });
+                
+                // Booking form submission
+                document.getElementById('booking-form').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.confirmBooking();
                 });
             }
             
@@ -2399,22 +2586,6 @@
                     const buttonText = this.currentLang === 'fr' ? 'Plus d\'infos' : 'More info';
                     marker.bindPopup(`<b>${loc.name}</b><br><button onclick="app.showLocationDetail('${loc.name}')">${buttonText}</button>`);
                 });
-            }
-            
-            setupWeather() {
-                // Simulated weather data for Benin
-                const cities = [
-                    { name: "Cotonou", temp: 28, condition: "Ensoleillé" },
-                    { name: "Porto-Novo", temp: 27, condition: "Nuageux" },
-                    { name: "Parakou", temp: 30, condition: "Ensoleillé" }
-                ];
-                
-                const randomCity = cities[Math.floor(Math.random() * cities.length)];
-                const weatherWidget = document.getElementById('weatherWidget');
-                weatherWidget.innerHTML = `
-                    <i class="fas fa-cloud-sun"></i> 
-                    ${randomCity.name}: ${randomCity.temp}°C, ${randomCity.condition}
-                `;
             }
             
             renderHotels() {
@@ -2819,8 +2990,46 @@
                 checkOutInput.valueAsDate = dayAfterTomorrow;
                 checkOutInput.min = dayAfterTomorrow.toISOString().split('T')[0];
                 
+                // Update total price
+                this.updateBookingPrice();
+                
                 // Show modal
                 this.bookingModal.classList.add('active');
+                
+                // Add event listener for room type change
+                roomTypeSelect.addEventListener('change', () => {
+                    this.updateBookingPrice();
+                });
+            }
+            
+            updateBookingPrice() {
+                if (!this.currentHotel) return;
+                
+                const roomTypeSelect = document.getElementById('room-type');
+                const selectedRoomType = roomTypeSelect.value;
+                const room = this.currentHotel.roomTypes.find(r => r.type === selectedRoomType);
+                
+                if (room) {
+                    document.getElementById('booking-total-price').textContent = 
+                        `${room.price.toLocaleString()} FCFA`;
+                }
+            }
+            
+            confirmBooking() {
+                const hotelName = this.currentHotel.name;
+                const confirmationTitle = this.currentLang === 'fr' ? 
+                    `Réservation confirmée à ${hotelName}` : 
+                    `Booking confirmed at ${hotelName}`;
+                
+                const confirmationMessage = this.currentLang === 'fr' ? 
+                    `Votre réservation a été confirmée avec succès. Un email de confirmation a été envoyé à votre adresse. Merci d'avoir choisi MONARCHY pour votre voyage au Bénin !` : 
+                    `Your booking has been successfully confirmed. A confirmation email has been sent to your address. Thank you for choosing MONARCHY for your trip to Benin!`;
+                
+                document.getElementById('confirmation-title').textContent = confirmationTitle;
+                document.getElementById('confirmation-message').textContent = confirmationMessage;
+                
+                this.bookingModal.classList.remove('active');
+                this.confirmationModal.classList.add('active');
             }
             
             showLocationDetail(locationName) {
@@ -2856,6 +3065,141 @@
                     "Information not available for this destination.";
                 
                 alert(`${locationName}\n\n${responses[locationName] ? responses[locationName][this.currentLang] : defaultMessage}`);
+            }
+            
+            sendAIMessage() {
+                const input = document.getElementById('ai-query');
+                const message = input.value.trim();
+                
+                if (message) {
+                    // Add user message
+                    const userMessage = document.createElement('div');
+                    userMessage.className = 'ai-message ai-question';
+                    userMessage.textContent = message;
+                    this.aiMessagesContainer.appendChild(userMessage);
+                    
+                    // Clear input
+                    input.value = '';
+                    
+                    // Show typing indicator
+                    this.showTypingIndicator();
+                    
+                    // Simulate AI response after delay
+                    setTimeout(() => {
+                        this.hideTypingIndicator();
+                        this.generateAIResponse(message);
+                    }, 1500);
+                }
+            }
+            
+            showTypingIndicator() {
+                this.typingIndicator = true;
+                const typingElement = document.createElement('div');
+                typingElement.className = 'typing-indicator';
+                typingElement.id = 'typing-indicator';
+                typingElement.innerHTML = '<span></span><span></span><span></span>';
+                this.aiMessagesContainer.appendChild(typingElement);
+                this.aiMessagesContainer.scrollTop = this.aiMessagesContainer.scrollHeight;
+            }
+            
+            hideTypingIndicator() {
+                this.typingIndicator = false;
+                const typingElement = document.getElementById('typing-indicator');
+                if (typingElement) {
+                    typingElement.remove();
+                }
+            }
+            
+            generateAIResponse(message) {
+                const responses = {
+                    "bonjour": "Bonjour ! Comment puis-je vous aider à planifier votre voyage au Bénin ?",
+                    "salut": "Salut ! Prêt à découvrir les merveilles du Bénin ?",
+                    "hotel": "Nous avons une sélection d'hôtels pour tous les budgets. Consultez notre section 'Hôtels' pour plus de détails.",
+                    "restaurant": "Le Bénin offre une cuisine locale délicieuse. Je vous recommande d'essayer le poulet bicyclette ou l'akassa !",
+                    "visite": "Les sites incontournables incluent Ouidah, Ganvié, le parc Pendjari et les palais royaux d'Abomey.",
+                    "plage": "Les meilleures plages se trouvent à Grand-Popo et à Cotonou. Idéales pour se détendre après une journée de visite !",
+                    "culture": "La culture béninoise est riche et variée, avec des influences vaudou, des festivals colorés et un patrimoine historique important.",
+                    "météo": "Le Bénin a un climat tropical avec deux saisons des pluies. Consultez notre widget météo pour les prévisions actuelles."
+                };
+                
+                const defaultResponse = "Je suis votre assistant touristique pour le Bénin. Posez-moi des questions sur les destinations, les hôtels, les activités ou la culture locale !";
+                
+                let response = defaultResponse;
+                
+                // Check for keywords
+                const lowerMessage = message.toLowerCase();
+                for (const keyword in responses) {
+                    if (lowerMessage.includes(keyword)) {
+                        response = responses[keyword];
+                        break;
+                    }
+                }
+                
+                // Add AI response
+                const aiResponse = document.createElement('div');
+                aiResponse.className = 'ai-message ai-response';
+                aiResponse.textContent = response;
+                this.aiMessagesContainer.appendChild(aiResponse);
+                this.aiMessagesContainer.scrollTop = this.aiMessagesContainer.scrollHeight;
+            }
+            
+            fetchWeather() {
+                // Simulate weather data for Benin
+                const weatherData = {
+                    temperature: 28,
+                    condition: "Ensoleillé",
+                    icon: "fa-sun"
+                };
+                
+                this.weatherData = weatherData;
+                this.updateWeatherWidget();
+            }
+            
+            updateWeatherWidget() {
+                if (!this.weatherData) return;
+                
+                const weatherWidget = document.getElementById('weatherWidget');
+                const weatherIcon = weatherWidget.querySelector('.weather-icon');
+                const weatherContent = document.getElementById('weatherContent');
+                
+                weatherIcon.className = `weather-icon fas ${this.weatherData.icon}`;
+                
+                const tempText = this.currentLang === 'fr' ? 
+                    `${this.weatherData.temperature}°C - ${this.weatherData.condition}` : 
+                    `${this.weatherData.temperature}°C - Sunny`;
+                
+                weatherContent.textContent = tempText;
+            }
+            
+            setupPWA() {
+                let deferredPrompt;
+                
+                window.addEventListener('beforeinstallprompt', (e) => {
+                    // Prevent Chrome 67 and earlier from automatically showing the prompt
+                    e.preventDefault();
+                    // Stash the event so it can be triggered later.
+                    deferredPrompt = e;
+                    // Show the install button
+                    document.getElementById('installContainer').classList.add('active');
+                });
+                
+                document.getElementById('installButton').addEventListener('click', () => {
+                    // Show the install prompt
+                    if (deferredPrompt) {
+                        deferredPrompt.prompt();
+                        // Wait for the user to respond to the prompt
+                        deferredPrompt.userChoice.then((choiceResult) => {
+                            if (choiceResult.outcome === 'accepted') {
+                                console.log('User accepted the install prompt');
+                            } else {
+                                console.log('User dismissed the install prompt');
+                            }
+                            deferredPrompt = null;
+                        });
+                    }
+                    // Hide the install button
+                    document.getElementById('installContainer').classList.remove('active');
+                });
             }
         }
 
