@@ -3,8 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monarke - Découvrez la beauté du Bénin</title>
+    <meta name="description" content="Monarke Tourism - Découvrez les trésors du Bénin: destinations, hôtels, restaurants, activités culturelles et réservations en ligne. Planifiez votre voyage au cœur de l'Afrique authentique.">
+    <meta name="keywords" content="Bénin, tourisme, voyage, Afrique, Cotonou, Ouidah, Ganvié, réservation, hôtels, restaurants">
+    <meta name="author" content="Monarke Tourism">
+    <title>Monarke - Découvrez la beauté du Bénin | Tourisme authentique</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         /* Variables et styles globaux */
         :root {
@@ -159,7 +163,7 @@
             100% { transform: scale(1); }
         }
 
-        /* Navigation */
+        /* Navigation améliorée */
         nav {
             position: fixed;
             top: 0;
@@ -196,25 +200,70 @@
             height: 50px;
         }
 
+        /* Nouveau : Moteur de recherche */
+        .search-container {
+            flex: 1;
+            max-width: 400px;
+            margin: 0 var(--spacing-lg);
+            position: relative;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border: 1px solid #ddd;
+            border-radius: 30px;
+            font-size: 1rem;
+        }
+
+        .search-container button {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--dark-gray);
+            cursor: pointer;
+        }
+
+        /* Nouveau : Sélecteur de langue */
+        .language-selector {
+            margin-right: var(--spacing-md);
+        }
+
+        .language-selector select {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            background-color: white;
+            cursor: pointer;
+        }
+
+        /* Menu amélioré */
         .nav-menu {
             display: flex;
             list-style: none;
+            position: relative;
         }
 
-        .nav-menu li {
-            margin-left: var(--spacing-xl); /* Augmentation de l'espacement */
+        .nav-menu > li {
+            margin-left: var(--spacing-xl);
+            position: relative;
         }
 
-        .nav-menu a {
+        .nav-menu > li > a {
             text-decoration: none;
             color: var(--primary-color);
             font-weight: 600;
             transition: var(--transition);
             padding: var(--spacing-xs) 0;
             position: relative;
+            display: flex;
+            align-items: center;
         }
 
-        .nav-menu a::after {
+        .nav-menu > li > a::after {
             content: '';
             position: absolute;
             bottom: 0;
@@ -225,14 +274,49 @@
             transition: var(--transition);
         }
 
-        .nav-menu a:hover::after {
+        .nav-menu > li > a:hover::after {
             width: 100%;
+        }
+
+        /* Sous-menus */
+        .submenu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: var(--secondary-color);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-radius: var(--border-radius);
+            width: 250px;
+            padding: var(--spacing-md);
+            display: none;
+            z-index: 10;
+        }
+
+        .nav-menu li:hover .submenu {
+            display: block;
+        }
+
+        .submenu li {
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .submenu a {
+            display: block;
+            padding: var(--spacing-sm) 0;
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: var(--transition);
+            border-bottom: 1px solid #eee;
+        }
+
+        .submenu a:hover {
+            color: var(--accent-color);
         }
 
         .user-actions {
             display: flex;
             align-items: center;
-            gap: var(--spacing-md); /* Ajout d'espace entre les boutons */
+            gap: var(--spacing-md);
         }
 
         .user-actions .btn {
@@ -286,6 +370,13 @@
             color: var(--accent-color);
         }
 
+        /* Menu mobile */
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
         /* Home Section */
         #home {
             background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1501555088652-021faa106b9b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80') no-repeat center center/cover;
@@ -305,9 +396,30 @@
             margin-bottom: var(--spacing-xl);
         }
 
-        /* Destinations Section */
+        /* Destinations Section améliorée */
         #destinations {
             background-color: var(--light-gray);
+        }
+
+        .destinations-filters {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-xl);
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: var(--spacing-sm) var(--spacing-md);
+            background-color: var(--secondary-color);
+            border: 1px solid #ddd;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
         }
 
         .destinations-container {
@@ -361,9 +473,75 @@
             color: var(--dark-gray);
         }
 
+        .destination-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-md);
+            font-size: 0.9rem;
+            color: #777;
+        }
+
         .destination-actions {
             display: flex;
             gap: var(--spacing-sm);
+        }
+
+        /* Détails de destination */
+        .destination-detail {
+            display: flex;
+            gap: var(--spacing-xl);
+            margin-top: var(--spacing-xl);
+        }
+
+        .detail-content {
+            flex: 1;
+        }
+
+        .detail-sidebar {
+            width: 300px;
+        }
+
+        .info-box {
+            background-color: var(--light-gray);
+            padding: var(--spacing-lg);
+            border-radius: var(--border-radius);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .info-box h4 {
+            margin-bottom: var(--spacing-md);
+            color: var(--accent-color);
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: var(--spacing-sm) 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-xl);
+        }
+
+        .gallery-item {
+            height: 150px;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
         }
 
         /* Hotels Section */
@@ -503,7 +681,7 @@
             margin-bottom: var(--spacing-sm);
         }
 
-        /* Booking Section */
+        /* Booking Section améliorée */
         #booking {
             background-color: var(--secondary-color);
         }
@@ -706,6 +884,54 @@
         .view-all {
             text-align: center;
             margin-top: var(--spacing-xl);
+        }
+
+        /* Events Section */
+        #events {
+            background-color: var(--secondary-color);
+        }
+
+        .events-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-xl);
+            margin-top: var(--spacing-lg);
+        }
+
+        .event-card {
+            background-color: var(--light-gray);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .event-header {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            padding: var(--spacing-sm) var(--spacing-md);
+            text-align: center;
+        }
+
+        .event-date {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .event-content {
+            padding: var(--spacing-lg);
+        }
+
+        .event-content h3 {
+            color: var(--accent-color);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .event-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-md);
+            font-size: 0.9rem;
+            color: #777;
         }
 
         /* Admin Section */
@@ -943,6 +1169,60 @@
             color: var(--dark-gray);
         }
 
+        /* Contact Section */
+        #contact {
+            background-color: var(--light-gray);
+        }
+
+        .contact-container {
+            display: flex;
+            gap: var(--spacing-xl);
+        }
+
+        .contact-info {
+            width: 300px;
+        }
+
+        .contact-card {
+            background-color: var(--secondary-color);
+            padding: var(--spacing-lg);
+            border-radius: var(--border-radius);
+            margin-bottom: var(--spacing-lg);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .contact-card h3 {
+            color: var(--accent-color);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .contact-item {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .contact-item i {
+            color: var(--accent-color);
+            min-width: 24px;
+        }
+
+        .contact-form {
+            flex: 1;
+            background-color: var(--secondary-color);
+            padding: var(--spacing-xl);
+            border-radius: var(--border-radius);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Map Section */
+        #map-section {
+            height: 400px;
+            margin-top: var(--spacing-xl);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+
         /* Forms */
         .form-container {
             max-width: 500px;
@@ -1064,12 +1344,25 @@
         }
 
         /* Responsive Design */
+        @media (max-width: 1200px) {
+            .nav-menu li {
+                margin-left: var(--spacing-lg);
+            }
+        }
+
         @media (max-width: 992px) {
             .about-container,
             .testimonials-container,
             .profile-container,
-            .booking-container {
+            .booking-container,
+            .contact-container,
+            .destination-detail {
                 flex-direction: column;
+            }
+            
+            .detail-sidebar {
+                width: 100%;
+                margin-top: var(--spacing-lg);
             }
             
             .testimonial {
@@ -1093,25 +1386,45 @@
                 width: 100%;
                 margin-bottom: var(--spacing-lg);
             }
+            
+            .contact-info {
+                width: 100%;
+                margin-bottom: var(--spacing-lg);
+            }
         }
 
         @media (max-width: 768px) {
             .nav-container {
-                flex-direction: column;
+                flex-wrap: wrap;
+            }
+            
+            .search-container {
+                order: 3;
+                max-width: 100%;
+                margin: var(--spacing-md) 0;
             }
             
             .nav-menu {
-                margin: var(--spacing-md) 0;
-                flex-wrap: wrap;
-                justify-content: center;
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                margin-top: var(--spacing-md);
+            }
+            
+            .nav-menu.active {
+                display: flex;
             }
             
             .nav-menu li {
-                margin: 0 var(--spacing-sm);
+                margin: 0 0 var(--spacing-sm) 0;
             }
             
-            .user-actions {
-                margin-top: var(--spacing-sm);
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .language-selector {
+                margin-left: auto;
             }
             
             h1 {
@@ -1136,6 +1449,33 @@
                 height: 40px;
             }
         }
+
+        @media (max-width: 576px) {
+            .booking-container {
+                flex-direction: column;
+            }
+            
+            .booking-steps {
+                flex-wrap: wrap;
+            }
+            
+            .step {
+                flex: 0 0 50%;
+                margin-bottom: var(--spacing-lg);
+            }
+            
+            .step:not(:last-child)::after {
+                display: none;
+            }
+            
+            .booking-tabs {
+                flex-wrap: wrap;
+            }
+            
+            .booking-tab {
+                flex: 0 0 100%;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1145,7 +1485,7 @@
         <p>Découvrez la beauté du Bénin</p>
     </div>
 
-    <!-- Navigation -->
+    <!-- Navigation améliorée -->
     <nav id="main-nav">
         <div class="container nav-container">
             <!-- Logo Monarke -->
@@ -1154,18 +1494,60 @@
                 <span>MONARKE</span>
             </a>
             
+            <!-- Moteur de recherche -->
+            <div class="search-container">
+                <input type="text" placeholder="Rechercher destinations, hôtels...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+            
             <ul class="nav-menu">
                 <li><a href="#home" class="nav-link">Accueil</a></li>
-                <li><a href="#destinations" class="nav-link">Destinations</a></li>
-                <li><a href="#hotels" class="nav-link">Hôtels</a></li>
-                <li><a href="#restaurants" class="nav-link">Restaurants</a></li>
+                
+                <li>
+                    <a href="#destinations" class="nav-link">Destinations <i class="fas fa-chevron-down"></i></a>
+                    <div class="submenu">
+                        <li><a href="#history">Historique</a></li>
+                        <li><a href="#beaches">Plages</a></li>
+                        <li><a href="#economy">Économie</a></li>
+                        <li><a href="#events">Événements</a></li>
+                    </div>
+                </li>
+                
+                <li>
+                    <a href="#hotels" class="nav-link">Hébergements <i class="fas fa-chevron-down"></i></a>
+                    <div class="submenu">
+                        <li><a href="#hotels">Hôtels</a></li>
+                        <li><a href="#hotels">Appartements</a></li>
+                        <li><a href="#hotels">Maisons d'hôtes</a></li>
+                        <li><a href="#hotels">Éco-lodges</a></li>
+                    </div>
+                </li>
+                
+                <li>
+                    <a href="#restaurants" class="nav-link">Restauration <i class="fas fa-chevron-down"></i></a>
+                    <div class="submenu">
+                        <li><a href="#restaurants">Restaurants</a></li>
+                        <li><a href="#restaurants">Cuisine locale</a></li>
+                        <li><a href="#restaurants">Marchés</a></li>
+                        <li><a href="#restaurants">Cours de cuisine</a></li>
+                    </div>
+                </li>
+                
+                <li><a href="#activities" class="nav-link">Activités</a></li>
                 <li><a href="#booking" class="nav-link">Réservation</a></li>
                 <li><a href="#testimonials" class="nav-link">Témoignages</a></li>
-                <li><a href="#history" class="nav-link">Historique</a></li>
-                <li><a href="#beaches" class="nav-link">Plages</a></li>
-                <li><a href="#economy" class="nav-link">Économique</a></li>
-                <li><a href="#about" class="nav-link">À propos</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
+            
+            <!-- Sélecteur de langue -->
+            <div class="language-selector">
+                <select id="language-select">
+                    <option value="fr">FR</option>
+                    <option value="en">EN</option>
+                    <option value="es">ES</option>
+                </select>
+            </div>
+            
             <div class="user-actions">
                 <a href="#login" class="btn btn-outline">Connexion</a>
                 <a href="#register" class="btn">Inscription</a>
@@ -1189,6 +1571,11 @@
                     </div>
                 </div>
             </div>
+            
+            <!-- Bouton menu mobile -->
+            <div class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </div>
         </div>
     </nav>
 
@@ -1206,6 +1593,15 @@
     <section id="destinations">
         <div class="container">
             <h2>Nos Destinations</h2>
+            
+            <div class="destinations-filters">
+                <div class="filter-btn active">Toutes</div>
+                <div class="filter-btn">Culture</div>
+                <div class="filter-btn">Nature</div>
+                <div class="filter-btn">Plages</div>
+                <div class="filter-btn">Historique</div>
+            </div>
+            
             <div class="destinations-container">
                 <div class="destination-card">
                     <div class="destination-image">
@@ -1214,12 +1610,17 @@
                     <div class="destination-content">
                         <h3>Cotonou</h3>
                         <p>La capitale économique du Bénin, une ville vibrante avec ses marchés animés, ses plages et sa vie nocturne.</p>
+                        <div class="destination-meta">
+                            <span><i class="fas fa-map-marker-alt"></i> Sud Bénin</span>
+                            <span><i class="fas fa-star"></i> 4.5</span>
+                        </div>
                         <div class="destination-actions">
-                            <a href="#hotels?city=Cotonou" class="btn">Voir les hôtels</a>
-                            <a href="#restaurants?city=Cotonou" class="btn btn-outline">Voir les restaurants</a>
+                            <a href="#destination-detail?city=Cotonou" class="btn">Voir détails</a>
+                            <a href="#booking?city=Cotonou" class="btn btn-outline">Réserver</a>
                         </div>
                     </div>
                 </div>
+                
                 <div class="destination-card">
                     <div class="destination-image">
                         <img src="https://images.unsplash.com/photo-1614541085974-1a1d3e0b8a4c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Ouidah">
@@ -1227,12 +1628,17 @@
                     <div class="destination-content">
                         <h3>Ouidah</h3>
                         <p>Le berceau du Vodoun au Bénin, célèbre pour sa Route des Esclaves et ses festivals culturels.</p>
+                        <div class="destination-meta">
+                            <span><i class="fas fa-map-marker-alt"></i> Côte Atlantique</span>
+                            <span><i class="fas fa-star"></i> 4.8</span>
+                        </div>
                         <div class="destination-actions">
-                            <a href="#hotels?city=Ouidah" class="btn">Voir les hôtels</a>
-                            <a href="#restaurants?city=Ouidah" class="btn btn-outline">Voir les restaurants</a>
+                            <a href="#destination-detail?city=Ouidah" class="btn">Voir détails</a>
+                            <a href="#booking?city=Ouidah" class="btn btn-outline">Réserver</a>
                         </div>
                     </div>
                 </div>
+                
                 <div class="destination-card">
                     <div class="destination-image">
                         <img src="https://images.unsplash.com/photo-1543429776-2782fc586c7a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=900&q=80" alt="Ganvié">
@@ -1240,9 +1646,13 @@
                     <div class="destination-content">
                         <h3>Ganvié</h3>
                         <p>La "Venise de l'Afrique", un village lacustre unique construit sur pilotis au milieu du lac Nokoué.</p>
+                        <div class="destination-meta">
+                            <span><i class="fas fa-map-marker-alt"></i> Lac Nokoué</span>
+                            <span><i class="fas fa-star"></i> 4.9</span>
+                        </div>
                         <div class="destination-actions">
-                            <a href="#hotels?city=Ganvie" class="btn">Voir les hôtels</a>
-                            <a href="#restaurants?city=Ganvie" class="btn btn-outline">Voir les restaurants</a>
+                            <a href="#destination-detail?city=Ganvie" class="btn">Voir détails</a>
+                            <a href="#booking?city=Ganvie" class="btn btn-outline">Réserver</a>
                         </div>
                     </div>
                 </div>
@@ -1250,519 +1660,103 @@
         </div>
     </section>
 
-    <section id="hotels">
+    <!-- Nouvelle section Détail de destination -->
+    <section id="destination-detail">
         <div class="container">
-            <h2>Nos Hôtels</h2>
-            <div class="hotels-container">
-                <div class="hotel-card">
-                    <div class="hotel-image">
-                        <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Hôtel du Lac">
-                    </div>
-                    <div class="hotel-content">
-                        <h3>Hôtel du Lac</h3>
-                        <div class="hotel-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                            (4.5)
-                        </div>
-                        <p class="hotel-location">Cotonou, Bénin</p>
-                        <p class="hotel-description">Situé au bord de la lagune, cet hôtel offre une vue imprenable et un service exceptionnel.</p>
-                        <div class="hotel-amenities">
-                            <span class="amenity">Wi-Fi gratuit</span>
-                            <span class="amenity">Piscine</span>
-                            <span class="amenity">Petit-déjeuner inclus</span>
-                            <span class="amenity">Parking</span>
-                        </div>
-                        <div class="hotel-price">25 000 FCFA/nuit</div>
-                        <a href="#booking?type=hotel&id=1" class="btn">Réserver maintenant</a>
-                    </div>
-                </div>
-                <div class="hotel-card">
-                    <div class="hotel-image">
-                        <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Palais Royal">
-                    </div>
-                    <div class="hotel-content">
-                        <h3>Palais Royal</h3>
-                        <div class="hotel-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="far fa-star"></i>
-                            (4.0)
-                        </div>
-                        <p class="hotel-location">Cotonou, Bénin</p>
-                        <p class="hotel-description">Un établissement luxueux au cœur de Cotonou, avec spa et restaurant gastronomique.</p>
-                        <div class="hotel-amenities">
-                            <span class="amenity">Spa</span>
-                            <span class="amenity">Restaurant</span>
-                            <span class="amenity">Salle de sport</span>
-                            <span class="amenity">Service de chambre</span>
-                        </div>
-                        <div class="hotel-price">35 000 FCFA/nuit</div>
-                        <a href="#booking?type=hotel&id=2" class="btn">Réserver maintenant</a>
-                    </div>
-                </div>
-                <div class="hotel-card">
-                    <div class="hotel-image">
-                        <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="La Maison du Voyageur">
-                    </div>
-                    <div class="hotel-content">
-                        <h3>La Maison du Voyageur</h3>
-                        <div class="hotel-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            (4.9)
-                        </div>
-                        <p class="hotel-location">Cotonou, Bénin</p>
-                        <p class="hotel-description">Une expérience authentique avec des chambres confortables et une ambiance chaleureuse.</p>
-                        <div class="hotel-amenities">
-                            <span class="amenity">Terrasse</span>
-                            <span class="amenity">Bar</span>
-                            <span class="amenity">Wi-Fi gratuit</span>
-                            <span class="amenity">Climatisation</span>
-                        </div>
-                        <div class="hotel-price">18 000 FCFA/nuit</div>
-                        <a href="#booking?type=hotel&id=3" class="btn">Réserver maintenant</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="restaurants">
-        <div class="container">
-            <h2>Nos Restaurants</h2>
-            <div class="restaurants-container">
-                <div class="restaurant-card">
-                    <div class="restaurant-image">
-                        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Le Gourmet Béninois">
-                    </div>
-                    <div class="restaurant-content">
-                        <h3>Le Gourmet Béninois</h3>
-                        <p class="restaurant-location">Cotonou, Bénin</p>
-                        <div class="restaurant-cuisine">Cuisine locale • Gastronomique</div>
-                        <div class="restaurant-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                            (4.7)
-                        </div>
-                        <p class="restaurant-description">Découvrez les saveurs authentiques du Bénin dans un cadre élégant et moderne.</p>
-                        <a href="#booking?type=restaurant&id=1" class="btn">Réserver une table</a>
-                    </div>
-                </div>
-                <div class="restaurant-card">
-                    <div class="restaurant-image">
-                        <img src="https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="La Lagune">
-                    </div>
-                    <div class="restaurant-content">
-                        <h3>La Lagune</h3>
-                        <p class="restaurant-location">Cotonou, Bénin</p>
-                        <div class="restaurant-cuisine">Fruits de mer • Vue sur mer</div>
-                        <div class="restaurant-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="far fa-star"></i>
-                            (4.2)
-                        </div>
-                        <p class="restaurant-description">Spécialités de poissons et fruits de mer frais avec vue panoramique sur l'océan.</p>
-                        <a href="#booking?type=restaurant&id=2" class="btn">Réserver une table</a>
-                    </div>
-                </div>
-                <div class="restaurant-card">
-                    <div class="restaurant-image">
-                        <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Savane Grill">
-                    </div>
-                    <div class="restaurant-content">
-                        <h3>Savane Grill</h3>
-                        <p class="restaurant-location">Cotonou, Bénin</p>
-                        <div class="restaurant-cuisine">Viandes grillées • Cuisine africaine</div>
-                        <div class="restaurant-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            (4.9)
-                        </div>
-                        <p class="restaurant-description">Spécialiste des viandes grillées au feu de bois dans une ambiance conviviale.</p>
-                        <a href="#booking?type=restaurant&id=3" class="btn">Réserver une table</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="booking">
-        <div class="container">
-            <h2>Réservez votre expérience</h2>
-            <div class="booking-steps">
-                <div class="step active">
-                    <div class="step-number">1</div>
-                    <div class="step-label">Choix</div>
-                </div>
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <div class="step-label">Détails</div>
-                </div>
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <div class="step-label">Paiement</div>
-                </div>
-                <div class="step">
-                    <div class="step-number">4</div>
-                    <div class="step-label">Confirmation</div>
-                </div>
-            </div>
+            <h2>Détails de la destination</h2>
             
-            <div class="booking-container">
-                <div class="booking-form-container">
-                    <div class="booking-tabs">
-                        <div class="booking-tab active" data-tab="hotel">Hôtel</div>
-                        <div class="booking-tab" data-tab="restaurant">Restaurant</div>
-                        <div class="booking-tab" data-tab="ticket">Billets</div>
+            <div class="destination-detail">
+                <div class="detail-content">
+                    <h3>Cotonou - La Porte du Bénin</h3>
+                    <p>Cotonou, capitale économique du Bénin, est une ville vibrante située entre l'océan Atlantique et le lac Nokoué. Avec son marché Dantokpa, l'un des plus grands d'Afrique de l'Ouest, ses plages animées et son ambiance nocturne, Cotonou offre une expérience urbaine authentique.</p>
+                    
+                    <h4>Monuments et sites culturels</h4>
+                    <ul>
+                        <li>Fondation Zinsou - Musée d'art contemporain</li>
+                        <li>Cathédrale de Cotonou - Architecture remarquable</li>
+                        <li>Port de Cotonou - Centre économique vital</li>
+                        <li>Place de l'Étoile Rouge - Monument historique</li>
+                    </ul>
+                    
+                    <h4>Activités populaires</h4>
+                    <div class="activities">
+                        <div class="activity-item">
+                            <i class="fas fa-ship"></i>
+                            <span>Croisière sur la lagune</span>
+                        </div>
+                        <div class="activity-item">
+                            <i class="fas fa-utensils"></i>
+                            <span>Dégustation de cuisine locale</span>
+                        </div>
+                        <div class="activity-item">
+                            <i class="fas fa-shopping-bag"></i>
+                            <span>Shopping au marché Dantokpa</span>
+                        </div>
                     </div>
                     
-                    <div class="booking-content active" id="hotel-booking">
-                        <h3>Réserver une chambre d'hôtel</h3>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="hotel">Hôtel</label>
-                                <select id="hotel">
-                                    <option value="">Sélectionnez un hôtel</option>
-                                    <option value="1">Hôtel du Lac - Cotonou</option>
-                                    <option value="2">Palais Royal - Cotonou</option>
-                                    <option value="3">La Maison du Voyageur - Cotonou</option>
-                                </select>
-                            </div>
+                    <div class="gallery">
+                        <div class="gallery-item">
+                            <img src="https://images.unsplash.com/photo-1602006131677-9d3d3a9f7e3c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Cotonou">
                         </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="check-in">Date d'arrivée</label>
-                                <input type="date" id="check-in">
-                            </div>
-                            <div class="form-group">
-                                <label for="check-out">Date de départ</label>
-                                <input type="date" id="check-out">
-                            </div>
+                        <div class="gallery-item">
+                            <img src="https://images.unsplash.com/photo-1534452203293-494d7ddbf7e0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Plage de Cotonou">
                         </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="guests">Nombre de personnes</label>
-                                <select id="guests">
-                                    <option value="1">1 personne</option>
-                                    <option value="2">2 personnes</option>
-                                    <option value="3">3 personnes</option>
-                                    <option value="4">4 personnes</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="rooms">Nombre de chambres</label>
-                                <select id="rooms">
-                                    <option value="1">1 chambre</option>
-                                    <option value="2">2 chambres</option>
-                                    <option value="3">3 chambres</option>
-                                </select>
-                            </div>
-                        </div>
-                        <button class="btn">Continuer</button>
-                    </div>
-                    
-                    <div class="booking-content" id="restaurant-booking">
-                        <h3>Réserver une table</h3>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="restaurant">Restaurant</label>
-                                <select id="restaurant">
-                                    <option value="">Sélectionnez un restaurant</option>
-                                    <option value="1">Le Gourmet Béninois - Cotonou</option>
-                                    <option value="2">La Lagune - Cotonou</option>
-                                    <option value="3">Savane Grill - Cotonou</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="reservation-date">Date</label>
-                                <input type="date" id="reservation-date">
-                            </div>
-                            <div class="form-group">
-                                <label for="reservation-time">Heure</label>
-                                <input type="time" id="reservation-time">
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="restaurant-guests">Nombre de personnes</label>
-                                <select id="restaurant-guests">
-                                    <option value="1">1 personne</option>
-                                    <option value="2">2 personnes</option>
-                                    <option value="3">3 personnes</option>
-                                    <option value="4">4 personnes</option>
-                                    <option value="5">5 personnes</option>
-                                    <option value="6">6 personnes</option>
-                                </select>
-                            </div>
-                        </div>
-                        <button class="btn">Continuer</button>
-                    </div>
-                    
-                    <div class="booking-content" id="ticket-booking">
-                        <h3>Acheter des billets</h3>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="activity">Activité</label>
-                                <select id="activity">
-                                    <option value="">Sélectionnez une activité</option>
-                                    <option value="1">Visite de Ganvié</option>
-                                    <option value="2">Musée d'Histoire de Ouidah</option>
-                                    <option value="3">Parc National de la Pendjari</option>
-                                    <option value="4">Visite du Palais Royal d'Abomey</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="ticket-date">Date</label>
-                                <input type="date" id="ticket-date">
-                            </div>
-                            <div class="form-group">
-                                <label for="ticket-quantity">Nombre de billets</label>
-                                <input type="number" id="ticket-quantity" min="1" value="1">
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="ticket-type">Type de billet</label>
-                                <select id="ticket-type">
-                                    <option value="adult">Adulte</option>
-                                    <option value="child">Enfant (5-12 ans)</option>
-                                    <option value="senior">Senior (+65 ans)</option>
-                                    <option value="student">Étudiant</option>
-                                </select>
-                            </div>
-                        </div>
-                        <button class="btn">Continuer</button>
-                    </div>
-                </div>
-                
-                <div class="booking-summary">
-                    <h3>Résumé de votre réservation</h3>
-                    <p>Sélectionnez une option à gauche pour voir le détail de votre réservation.</p>
-                    <div class="summary-item">
-                        <span>Sous-total:</span>
-                        <span>0 FCFA</span>
-                    </div>
-                    <div class="summary-item">
-                        <span>Taxes:</span>
-                        <span>0 FCFA</span>
-                    </div>
-                    <div class="summary-item">
-                        <span>Frais de service:</span>
-                        <span>0 FCFA</span>
-                    </div>
-                    <div class="summary-total">
-                        <span>Total:</span>
-                        <span>0 FCFA</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="testimonials">
-        <div class="container">
-            <h2>Témoignages</h2>
-            <div class="testimonials-container">
-                <div class="testimonial">
-                    <div class="testimonial-image">
-                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="Témoignage">
-                    </div>
-                    <div class="testimonial-content">
-                        <p>"Mon voyage avec Monarke a été une révélation. J'ai découvert un Bénin que je ne connaissais pas, avec une richesse culturelle incroyable et des paysages à couper le souffle."</p>
-                        <div class="name">Thomas Dubois</div>
-                    </div>
-                </div>
-                <div class="testimonial">
-                    <div class="testimonial-image">
-                        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=776&q=80" alt="Témoignage">
-                    </div>
-                    <div class="testimonial-content">
-                        <p>"L'organisation était impeccable et les guides extrêmement compétents. J'ai particulièrement apprécié les rencontres avec les artisans locaux et la découverte de la cuisine béninoise."</p>
-                        <div class="name">Aïssatou Diop</div>
-                    </div>
-                </div>
-            </div>
-            <div class="view-all">
-                <a href="#" class="btn">Voir tous les témoignages</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Nouvelle section Historique -->
-    <section id="history">
-        <div class="container">
-            <h2>Histoire du Bénin</h2>
-            <div class="about-container">
-                <div class="about-content">
-                    <p>Le Bénin, autrefois appelé Dahomey, est un pays d'Afrique de l'Ouest avec une histoire riche et complexe. Il a été le siège de plusieurs royaumes, dont le plus célèbre est le Royaume du Dahomey, connu pour ses Amazones, une unité militaire féminine redoutable.</p>
-                    <p>Le pays a été un important centre de la traite des esclaves pendant la période coloniale, avec des sites comme Ouidah qui était un port majeur d'embarquement. Après l'abolition, le Bénin est devenu une colonie française jusqu'à son indépendance en 1960.</p>
-                    <p>Aujourd'hui, le Bénin est une république démocratique qui préserve soigneusement son patrimoine historique. Des sites comme la Route des Esclaves, les Palais Royaux d'Abomey et la ville de Porto-Novo, classée au patrimoine mondial de l'UNESCO, témoignent de ce passé.</p>
-                </div>
-                <div class="about-image">
-                    <img src="https://images.unsplash.com/photo-1614541085974-1a1d3e0b8a4c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Histoire du Bénin">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Nouvelle section Plages -->
-    <section id="beaches">
-        <div class="container">
-            <h2>Plages du Bénin</h2>
-            <div class="destinations-container">
-                <div class="destination-card">
-                    <div class="destination-image">
-                        <img src="https://images.unsplash.com/photo-1534452203293-494d7ddbf7e0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Plage de Fidjrosse">
-                    </div>
-                    <div class="destination-content">
-                        <h3>Plage de Fidjrosse</h3>
-                        <p>La plage la plus populaire de Cotonou, idéale pour des promenades au coucher du soleil et des dégustations de poissons grillés.</p>
-                        <div class="destination-actions">
-                            <a href="#hotels?location=Fidjrosse" class="btn">Voir les hôtels</a>
-                            <a href="#restaurants?location=Fidjrosse" class="btn btn-outline">Voir les restaurants</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="destination-card">
-                    <div class="destination-image">
-                        <img src="https://images.unsplash.com/photo-1505228395891-9a51e7e86bf6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1332&q=80" alt="Plage de Grand-Popo">
-                    </div>
-                    <div class="destination-content">
-                        <h3>Plage de Grand-Popo</h3>
-                        <p>Une étendue de sable fin bordée de cocotiers, parfaite pour se détendre et profiter de l'océan Atlantique.</p>
-                        <div class="destination-actions">
-                            <a href="#hotels?location=Grand-Popo" class="btn">Voir les hôtels</a>
-                            <a href="#restaurants?location=Grand-Popo" class="btn btn-outline">Voir les restaurants</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="destination-card">
-                    <div class="destination-image">
-                        <img src="https://images.unsplash.com/photo-1519046904884-53103b34b206?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Plage de Ouidah">
-                    </div>
-                    <div class="destination-content">
-                        <h3>Plage de Ouidah</h3>
-                        <p>Une plage historique, point de départ de la Route des Esclaves, avec un fort patrimoine culturel et naturel.</p>
-                        <div class="destination-actions">
-                            <a href="#hotels?location=Ouidah" class="btn">Voir les hôtels</a>
-                            <a href="#restaurants?location=Ouidah" class="btn btn-outline">Voir les restaurants</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Nouvelle section Économique -->
-    <section id="economy">
-        <div class="container">
-            <h2>Économie du Bénin</h2>
-            <div class="about-container">
-                <div class="about-content">
-                    <p>L'économie du Bénin repose principalement sur l'agriculture, le commerce transfrontalier et les services. Le coton est la principale culture d'exportation, représentant environ 40% des recettes d'exportation du pays.</p>
-                    <p>Le port de Cotonou est un moteur économique important, servant de point d'entrée pour les pays enclavés voisins comme le Niger et le Burkina Faso. Le tourisme est un secteur en croissance, avec un potentiel important grâce au riche patrimoine culturel et naturel du pays.</p>
-                    <p>Le gouvernement béninois a entrepris des réformes pour améliorer le climat des affaires et attirer les investissements étrangers. Des secteurs comme les technologies de l'information et l'agro-industrie sont en plein développement.</p>
-                </div>
-                <div class="about-image">
-                    <div class="chart">
-                        <div class="chart-title">Principaux Secteurs Économiques</div>
-                        <div class="chart-content">
-                            <div class="bar" style="height: 80%;">
-                                <div class="bar-value">40%</div>
-                                <div class="bar-label">Agriculture</div>
-                            </div>
-                            <div class="bar" style="height: 65%;">
-                                <div class="bar-value">25%</div>
-                                <div class="bar-label">Commerce</div>
-                            </div>
-                            <div class="bar" style="height: 70%;">
-                                <div class="bar-value">30%</div>
-                                <div class="bar-label">Services</div>
-                            </div>
-                            <div class="bar" style="height: 40%;">
-                                <div class="bar-value">5%</div>
-                                <div class="bar-label">Tourisme</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="chart-container">
-                <div class="chart">
-                    <div class="chart-title">Croissance du Tourisme (2018-2023)</div>
-                    <div class="chart-content">
-                        <div class="bar" style="height: 20%;">
-                            <div class="bar-value">120K</div>
-                            <div class="bar-label">2018</div>
-                        </div>
-                        <div class="bar" style="height: 35%;">
-                            <div class="bar-value">210K</div>
-                            <div class="bar-label">2019</div>
-                        </div>
-                        <div class="bar" style="height: 15%;">
-                            <div class="bar-value">90K</div>
-                            <div class="bar-label">2020</div>
-                        </div>
-                        <div class="bar" style="height: 30%;">
-                            <div class="bar-value">180K</div>
-                            <div class="bar-label">2021</div>
-                        </div>
-                        <div class="bar" style="height: 50%;">
-                            <div class="bar-value">300K</div>
-                            <div class="bar-label">2022</div>
-                        </div>
-                        <div class="bar" style="height: 70%;">
-                            <div class="bar-value">420K</div>
-                            <div class="bar-label">2023</div>
+                        <div class="gallery-item">
+                            <img src="https://images.unsplash.com/photo-1614541085974-1a1d3e0b8a4c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Ouidah">
                         </div>
                     </div>
                 </div>
                 
-                <div class="chart">
-                    <div class="chart-title">Répartition des Visiteurs par Nationalité</div>
-                    <div class="chart-content">
-                        <div class="bar" style="height: 60%; background-color: #3498db;">
-                            <div class="bar-value">35%</div>
-                            <div class="bar-label">France</div>
+                <div class="detail-sidebar">
+                    <div class="info-box">
+                        <h4>Informations pratiques</h4>
+                        <div class="info-item">
+                            <span>Meilleure période:</span>
+                            <span>Novembre à Mars</span>
                         </div>
-                        <div class="bar" style="height: 45%; background-color: #2ecc71;">
-                            <div class="bar-value">25%</div>
-                            <div class="bar-label">Nigeria</div>
+                        <div class="info-item">
+                            <span>Langues:</span>
+                            <span>Français, Fon, Yoruba</span>
                         </div>
-                        <div class="bar" style="height: 30%; background-color: #9b59b6;">
-                            <div class="bar-value">15%</div>
-                            <div class="bar-label">USA</div>
+                        <div class="info-item">
+                            <span>Devise:</span>
+                            <span>Franc CFA (XOF)</span>
                         </div>
-                        <div class="bar" style="height: 25%; background-color: #f1c40f;">
-                            <div class="bar-value">10%</div>
-                            <div class="bar-label">Allemagne</div>
+                        <div class="info-item">
+                            <span>Décalage horaire:</span>
+                            <span>UTC +1</span>
                         </div>
-                        <div class="bar" style="height: 20%; background-color: #e67e22;">
-                            <div class="bar-value">15%</div>
-                            <div class="bar-label">Autres</div>
+                    </div>
+                    
+                    <div class="info-box">
+                        <h4>Accès</h4>
+                        <div class="info-item">
+                            <span>Coordonnées GPS:</span>
+                            <span>6.3725° N, 2.3583° E</span>
+                        </div>
+                        <div class="info-item">
+                            <span>Aéroport:</span>
+                            <span>Aéroport Cadjehoun (COO)</span>
+                        </div>
+                        <div class="info-item">
+                            <span>Distance de l'aéroport:</span>
+                            <span>5 km (15 min)</span>
+                        </div>
+                    </div>
+                    
+                    <div class="info-box">
+                        <h4>Tarifs indicatifs</h4>
+                        <div class="info-item">
+                            <span>Visite guidée (1/2 journée):</span>
+                            <span>15 000 FCFA</span>
+                        </div>
+                        <div class="info-item">
+                            <span>Entrée musée:</span>
+                            <span>2 000 FCFA</span>
+                        </div>
+                        <div class="info-item">
+                            <span>Croisière lagune:</span>
+                            <span>25 000 FCFA</span>
                         </div>
                     </div>
                 </div>
@@ -1770,312 +1764,137 @@
         </div>
     </section>
 
-    <!-- Section À Propos déplacée ici -->
-    <section id="about">
+    <!-- Nouvelle section Événements -->
+    <section id="events">
         <div class="container">
-            <h2>À propos de Monarke</h2>
-            <div class="about-container">
-                <div class="about-content">
-                    <p>Monarke est une initiative touristique innovante qui vise à mettre en valeur le patrimoine culturel et naturel du Bénin. Fondée en 2023, notre mission est de créer des expériences authentiques et mémorables pour les voyageurs du monde entier.</p>
-                    <p>Nous collaborons avec les communautés locales pour développer un tourisme durable qui profite à la fois aux visiteurs et aux résidents. Nos circuits sont soigneusement conçus pour vous faire découvrir les trésors cachés du pays tout en respectant les traditions et l'environnement.</p>
-                    <p>Notre équipe de guides experts possède une connaissance approfondie de l'histoire, de la culture et de la géographie du Bénin. Ils sont passionnés par leur travail et s'engagent à vous offrir une expérience éducative et divertissante.</p>
-                    <a href="#" class="btn">Voir plus</a>
-                </div>
-                <div class="about-image">
-                    <img src="https://images.unsplash.com/photo-1543429776-2782fc586c7a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=900&q=80" alt="Paysage béninois">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="admin">
-        <div class="container">
-            <h2>Espace Administrateur</h2>
-            <div class="admin-dashboard">
-                <div class="admin-sidebar">
-                    <h3>Tableau de bord</h3>
-                    <ul class="admin-menu">
-                        <li><a href="#" class="admin-nav active" data-target="dashboard"><i class="fas fa-tachometer-alt"></i> Tableau de bord</a></li>
-                        <li><a href="#" class="admin-nav" data-target="users"><i class="fas fa-users"></i> Gestion utilisateurs</a></li>
-                        <li><a href="#" class="admin-nav" data-target="destinations"><i class="fas fa-map-marked-alt"></i> Destinations</a></li>
-                        <li><a href="#" class="admin-nav" data-target="testimonials"><i class="fas fa-comments"></i> Témoignages</a></li>
-                        <li><a href="#" class="admin-nav" data-target="news"><i class="fas fa-newspaper"></i> Actualités</a></li>
-                        <li><a href="#" class="admin-nav" data-target="database"><i class="fas fa-database"></i> Bases de données</a></li>
-                        <li><a href="#" class="admin-nav" data-target="settings"><i class="fas fa-cog"></i> Paramètres</a></li>
-                        <li><a href="#" id="admin-logout"><i class="fas fa-sign-out-alt"></i> Déconnexion</a></li>
-                    </ul>
-                </div>
-                <div class="admin-content">
-                    <div class="admin-content-panel active" id="dashboard-panel">
-                        <div class="admin-stats">
-                            <div class="stat-card">
-                                <div class="number">1,248</div>
-                                <div class="label">Visiteurs</div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="number">84</div>
-                                <div class="label">Réservations</div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="number">32</div>
-                                <div class="label">Témoignages</div>
-                            </div>
-                        </div>
-                        
-                        <h3>Gestion des contenus</h3>
-                        <p>Bienvenue dans votre espace d'administration. À partir de ce tableau de bord, vous pouvez gérer toutes les fonctionnalités de votre site Monarke.</p>
-                        
-                        <div class="form-group">
-                            <label for="new-content">Ajouter un nouveau contenu</label>
-                            <textarea id="new-content" rows="5" placeholder="Écrivez ici..."></textarea>
-                        </div>
-                        <button class="btn">Publier</button>
-                        
-                        <!-- Database Management -->
-                        <div class="database-section">
-                            <h3>Gestion des Bases de Données</h3>
-                            <p>Accédez et gérez toutes les données de votre site Monarke.</p>
-                            
-                            <div class="db-tabs">
-                                <button class="btn btn-admin active" data-tab="users">Utilisateurs</button>
-                                <button class="btn btn-admin" data-tab="testimonials">Témoignages</button>
-                                <button class="btn btn-admin" data-tab="bookings">Réservations</button>
-                            </div>
-                            
-                            <div class="db-content" id="users-table">
-                                <table class="db-table">
-                                    <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Nom</th>
-                                            <th>Email</th>
-                                            <th>Rôle</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>001</td>
-                                            <td>Admin Monarke</td>
-                                            <td>admin@monarke.bj</td>
-                                            <td>Administrateur</td>
-                                            <td class="db-actions">
-                                                <button class="btn btn-outline"><i class="fas fa-edit"></i></button>
-                                                <button class="btn btn-outline"><i class="fas fa-trash"></i></button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>002</td>
-                                            <td>Thomas Dubois</td>
-                                            <td>thomas@example.com</td>
-                                            <td>Utilisateur</td>
-                                            <td class="db-actions">
-                                                <button class="btn btn-outline"><i class="fas fa-edit"></i></button>
-                                                <button class="btn btn-outline"><i class="fas fa-trash"></i></button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>003</td>
-                                            <td>Aïssatou Diop</td>
-                                            <td>aissatou@example.com</td>
-                                            <td>Utilisateur</td>
-                                            <td class="db-actions">
-                                                <button class="btn btn-outline"><i class="fas fa-edit"></i></button>
-                                                <button class="btn btn-outline"><i class="fas fa-trash"></i></button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <button class="btn" style="margin-top: var(--spacing-md);">Ajouter un utilisateur</button>
-                            </div>
-                        </div>
+            <h2>Événements & Festivals</h2>
+            
+            <div class="events-container">
+                <div class="event-card">
+                    <div class="event-header">
+                        <div class="event-date">15-22 Janvier</div>
                     </div>
-                    
-                    <!-- Contenu pour les autres panneaux d'administration -->
-                    <div class="admin-content-panel" id="users-panel">
-                        <h3>Gestion des Utilisateurs</h3>
-                        <p>Gérez tous les utilisateurs de la plateforme Monarke.</p>
-                        <div class="form-group">
-                            <label for="search-user">Rechercher un utilisateur</label>
-                            <input type="text" id="search-user" placeholder="Entrez un nom ou un email">
+                    <div class="event-content">
+                        <h3>Festival International de Ouidah</h3>
+                        <p>Célébration du patrimoine culturel et historique de Ouidah, avec des danses traditionnelles, des rituels vodoun et des expositions d'art.</p>
+                        <div class="event-meta">
+                            <span><i class="fas fa-map-marker-alt"></i> Ouidah</span>
+                            <span><i class="fas fa-users"></i> 10 000+ participants</span>
                         </div>
-                        <button class="btn">Rechercher</button>
-                        <div class="database-section" style="margin-top: var(--spacing-md);">
-                            <table class="db-table">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Nom</th>
-                                        <th>Email</th>
-                                        <th>Rôle</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>001</td>
-                                        <td>Admin Monarke</td>
-                                        <td>admin@monarke.bj</td>
-                                        <td>Administrateur</td>
-                                        <td class="db-actions">
-                                            <button class="btn btn-outline"><i class="fas fa-edit"></i></button>
-                                            <button class="btn btn-outline"><i class="fas fa-trash"></i></button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>002</td>
-                                        <td>Thomas Dubois</td>
-                                        <td>thomas@example.com</td>
-                                        <td>Utilisateur</td>
-                                        <td class="db-actions">
-                                            <button class="btn btn-outline"><i class="fas fa-edit"></i></button>
-                                            <button class="btn btn-outline"><i class="fas fa-trash"></i></button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>003</td>
-                                        <td>Aïssatou Diop</td>
-                                        <td>aissatou@example.com</td>
-                                        <td>Utilisateur</td>
-                                        <td class="db-actions">
-                                            <button class="btn btn-outline"><i class="fas fa-edit"></i></button>
-                                            <button class="btn btn-outline"><i class="fas fa-trash"></i></button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                        <a href="#" class="btn">Plus d'infos</a>
                     </div>
-                    
-                    <div class="admin-content-panel" id="settings-panel">
-                        <h3>Paramètres du Système</h3>
-                        <p>Configurez les paramètres généraux de la plateforme Monarke.</p>
-                        
-                        <div class="form-group">
-                            <label for="site-name">Nom du site</label>
-                            <input type="text" id="site-name" value="Monarke Tourism">
+                </div>
+                
+                <div class="event-card">
+                    <div class="event-header">
+                        <div class="event-date">10-12 Mars</div>
+                    </div>
+                    <div class="event-content">
+                        <h3>Fête des Coutumes à Abomey</h3>
+                        <p>Reconstitution historique des traditions royales du Dahomey avec parades, cérémonies et spectacles de rue.</p>
+                        <div class="event-meta">
+                            <span><i class="fas fa-map-marker-alt"></i> Abomey</span>
+                            <span><i class="fas fa-users"></i> 5 000+ participants</span>
                         </div>
-                        <div class="form-group">
-                            <label for="site-description">Description du site</label>
-                            <textarea id="site-description" rows="3">Découvrez la beauté du Bénin avec Monarke</textarea>
+                        <a href="#" class="btn">Plus d'infos</a>
+                    </div>
+                </div>
+                
+                <div class="event-card">
+                    <div class="event-header">
+                        <div class="event-date">5-7 Juillet</div>
+                    </div>
+                    <div class="event-content">
+                        <h3>Festival des Arts et Cultures de Porto-Novo</h3>
+                        <p>Exposition d'art contemporain, spectacles de danse et musique, et ateliers d'artisanat traditionnel.</p>
+                        <div class="event-meta">
+                            <span><i class="fas fa-map-marker-alt"></i> Porto-Novo</span>
+                            <span><i class="fas fa-users"></i> 8 000+ participants</span>
                         </div>
-                        <div class="form-group">
-                            <label for="maintenance-mode">Mode maintenance</label>
-                            <select id="maintenance-mode">
-                                <option value="0">Désactivé</option>
-                                <option value="1">Activé</option>
-                            </select>
-                        </div>
-                        <button class="btn">Enregistrer les paramètres</button>
+                        <a href="#" class="btn">Plus d'infos</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="profile">
+    <!-- Nouvelle section Contact -->
+    <section id="contact">
         <div class="container">
-            <h2>Mon Profil</h2>
-            <div class="profile-container">
-                <div class="profile-sidebar">
-                    <ul class="profile-menu">
-                        <li><a href="#" class="active">Profil Public</a></li>
-                        <li><a href="#">Paramètres du Compte</a></li>
-                        <li><a href="#">Sécurité</a></li>
-                        <li><a href="#">Mes Réservations</a></li>
-                        <li><a href="#">Mes Témoignages</a></li>
-                        <li><a href="#">Notifications</a></li>
-                        <li><a href="#">Préférences</a></li>
-                    </ul>
-                </div>
-                <div class="profile-content">
-                    <div class="profile-header">
-                        <div class="profile-avatar">
-                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="Admin Monarke">
+            <h2>Contactez-nous</h2>
+            
+            <div class="contact-container">
+                <div class="contact-info">
+                    <div class="contact-card">
+                        <h3>Informations de contact</h3>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>123 Boulevard de la Marina, Cotonou, Bénin</span>
                         </div>
-                        <div class="profile-info">
-                            <h2>Admin Monarke</h2>
-                            <p>Fondateur et Administrateur Principal</p>
-                            <div class="profile-stats">
-                                <div class="profile-stat">
-                                    <div class="number">24</div>
-                                    <div class="label">Contenus</div>
-                                </div>
-                                <div class="profile-stat">
-                                    <div class="number">1,248</div>
-                                    <div class="label">Visiteurs</div>
-                                </div>
-                                <div class="profile-stat">
-                                    <div class="number">84</div>
-                                    <div class="label">Réservations</div>
-                                </div>
-                            </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span>+229 21 30 45 60</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>info@monarke.bj</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-clock"></i>
+                            <span>Lun-Ven: 8h-18h | Sam: 9h-13h</span>
                         </div>
                     </div>
                     
-                    <h3>Informations Personnelles</h3>
+                    <div class="contact-card">
+                        <h3>Bureau de tourisme</h3>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Place de l'Étoile Rouge, Cotonou</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span>+229 21 31 42 53</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-clock"></i>
+                            <span>Tous les jours: 9h-17h</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <h3>Envoyez-nous un message</h3>
                     <div class="form-group">
-                        <label for="full-name">Nom Complet</label>
-                        <input type="text" id="full-name" value="Admin Monarke">
+                        <label for="contact-name">Nom complet</label>
+                        <input type="text" id="contact-name">
                     </div>
                     <div class="form-group">
-                        <label for="email">Adresse Email</label>
-                        <input type="email" id="email" value="admin@monarke.bj">
+                        <label for="contact-email">Email</label>
+                        <input type="email" id="contact-email">
                     </div>
                     <div class="form-group">
-                        <label for="phone">Téléphone</label>
-                        <input type="text" id="phone" value="+229 60 12 34 56">
+                        <label for="contact-phone">Téléphone</label>
+                        <input type="text" id="contact-phone">
                     </div>
                     <div class="form-group">
-                        <label for="bio">Bio</label>
-                        <textarea id="bio" rows="4">Fondateur de Monarke, passionné par le tourisme durable au Bénin et la mise en valeur du patrimoine culturel et naturel du pays.</textarea>
-                    </div>
-                    <button class="btn">Enregistrer les modifications</button>
-                    
-                    <h3 style="margin-top: var(--spacing-xl);">Paramètres de Sécurité</h3>
-                    <div class="form-group">
-                        <label for="current-password">Mot de passe actuel</label>
-                        <input type="password" id="current-password">
-                    </div>
-                    <div class="form-group">
-                        <label for="new-password">Nouveau mot de passe</label>
-                        <input type="password" id="new-password">
+                        <label for="contact-subject">Sujet</label>
+                        <select id="contact-subject">
+                            <option value="">Sélectionnez un sujet</option>
+                            <option value="reservation">Réservation</option>
+                            <option value="info">Demande d'information</option>
+                            <option value="group">Voyage en groupe</option>
+                            <option value="feedback">Retour d'expérience</option>
+                        </select>
                     </div>
                     <div class="form-group">
-                        <label for="confirm-password">Confirmer le nouveau mot de passe</label>
-                        <input type="password" id="confirm-password">
+                        <label for="contact-message">Message</label>
+                        <textarea id="contact-message" rows="5"></textarea>
                     </div>
-                    <button class="btn">Mettre à jour le mot de passe</button>
+                    <button class="btn">Envoyer le message</button>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <section id="register">
-        <div class="container">
-            <div class="form-container">
-                <h2>Créer un compte</h2>
-                <div class="form-group">
-                    <label for="name">Nom complet</label>
-                    <input type="text" id="name" placeholder="Votre nom">
-                </div>
-                <div class="form-group">
-                    <label for="email">Adresse email</label>
-                    <input type="email" id="email" placeholder="Votre email">
-                </div>
-                <div class="form-group">
-                    <label for="password">Mot de passe</label>
-                    <input type="password" id="password" placeholder="Créez un mot de passe">
-                </div>
-                <div class="form-group">
-                    <label for="confirm-password">Confirmez le mot de passe</label>
-                    <input type="password" id="confirm-password" placeholder="Confirmez votre mot de passe">
-                </div>
-                <button class="btn">S'inscrire</button>
-                <p style="text-align: center; margin-top: var(--spacing-md);">
-                    Vous avez déjà un compte? <a href="#login" style="color: var(--accent-color);">Connectez-vous</a>
-                </p>
-            </div>
+            
+            <div id="map-section"></div>
         </div>
     </section>
 
@@ -2098,6 +1917,7 @@
         </div>
     </footer>
 
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
         // Splash screen
         document.addEventListener('DOMContentLoaded', function() {
@@ -2109,6 +1929,8 @@
             const logoutBtn = document.getElementById('logout-btn');
             const userLogoutBtn = document.getElementById('user-logout-btn');
             const adminLogout = document.getElementById('admin-logout');
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const navMenu = document.querySelector('.nav-menu');
             
             // Simulate admin login
             const isAdmin = true; // Set to false for regular users
@@ -2275,6 +2097,49 @@
                     e.preventDefault();
                     alert('Réservation en cours de traitement...');
                 });
+            });
+            
+            // Mobile menu toggle
+            mobileMenuBtn.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+            });
+            
+            // Initialize map
+            function initMap() {
+                const map = L.map('map-section').setView([6.3725, 2.3583], 12);
+                
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                }).addTo(map);
+                
+                // Add markers
+                const locations = [
+                    { name: "Cotonou", coords: [6.3725, 2.3583] },
+                    { name: "Ouidah", coords: [6.3667, 2.0833] },
+                    { name: "Ganvié", coords: [6.4667, 2.4167] },
+                    { name: "Porto-Novo", coords: [6.4969, 2.6289] }
+                ];
+                
+                locations.forEach(loc => {
+                    L.marker(loc.coords).addTo(map)
+                        .bindPopup(loc.name);
+                });
+            }
+            
+            // Initialize map when contact section is active
+            document.getElementById('contact').addEventListener('click', function() {
+                if (!window.mapInitialized) {
+                    initMap();
+                    window.mapInitialized = true;
+                }
+            });
+            
+            // Language switcher
+            const languageSelect = document.getElementById('language-select');
+            languageSelect.addEventListener('change', function() {
+                const lang = this.value;
+                // In a real implementation, this would change the language of the site
+                alert(`Langue changée en ${lang === 'fr' ? 'Français' : lang === 'en' ? 'Anglais' : 'Espagnol'}`);
             });
         });
     </script>
