@@ -297,30 +297,6 @@
             margin-bottom: var(--spacing-xl);
         }
 
-        /* About Section */
-        .about-container {
-            display: flex;
-            gap: var(--spacing-xl);
-            align-items: center;
-        }
-
-        .about-content {
-            flex: 1;
-        }
-
-        .about-image {
-            flex: 1;
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .about-image img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
         /* Destinations Section */
         #destinations {
             background-color: var(--light-gray);
@@ -1011,6 +987,74 @@
             color: rgba(255, 255, 255, 0.7);
         }
 
+        /* New sections */
+        #history {
+            background-color: var(--light-gray);
+        }
+
+        #beaches {
+            background-color: var(--secondary-color);
+        }
+
+        #economy {
+            background-color: var(--light-gray);
+        }
+
+        .chart-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-xl);
+        }
+
+        .chart {
+            flex: 1;
+            min-width: 300px;
+            background-color: var(--secondary-color);
+            padding: var(--spacing-lg);
+            border-radius: var(--border-radius);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .chart-title {
+            text-align: center;
+            margin-bottom: var(--spacing-lg);
+            color: var(--primary-color);
+        }
+
+        .chart-content {
+            height: 300px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            padding: var(--spacing-md);
+        }
+
+        .bar {
+            width: 50px;
+            background-color: var(--accent-color);
+            position: relative;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+            transition: height 0.5s ease;
+        }
+
+        .bar-label {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.9rem;
+            color: var(--dark-gray);
+        }
+
+        .bar-value {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-weight: 600;
+        }
+
         /* Responsive Design */
         @media (max-width: 992px) {
             .about-container,
@@ -1095,17 +1139,20 @@
             <a href="#home" class="nav-logo">MONARKE</a>
             <ul class="nav-menu">
                 <li><a href="#home" class="nav-link">Accueil</a></li>
-                <li><a href="#about" class="nav-link">À propos</a></li>
                 <li><a href="#destinations" class="nav-link">Destinations</a></li>
                 <li><a href="#hotels" class="nav-link">Hôtels</a></li>
                 <li><a href="#restaurants" class="nav-link">Restaurants</a></li>
                 <li><a href="#booking" class="nav-link">Réservation</a></li>
                 <li><a href="#testimonials" class="nav-link">Témoignages</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
+                <li><a href="#history" class="nav-link">Historique</a></li>
+                <li><a href="#beaches" class="nav-link">Plages</a></li>
+                <li><a href="#economy" class="nav-link">Économique</a></li>
+                <li><a href="#about" class="nav-link">À propos</a></li>
             </ul>
             <div class="user-actions">
                 <a href="#login" class="btn btn-outline">Connexion</a>
                 <a href="#register" class="btn">Inscription</a>
+                <!-- Icône admin (visible uniquement pour admin) -->
                 <div class="user-info" id="admin-info" style="display: none;">
                     <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="Admin">
                     <span>Admin</span>
@@ -1113,6 +1160,15 @@
                         <a href="#profile"><i class="fas fa-user"></i> Mon Profil</a>
                         <a href="#admin"><i class="fas fa-cog"></i> Administration</a>
                         <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
+                    </div>
+                </div>
+                <!-- Icône utilisateur standard (visible pour tous les utilisateurs connectés) -->
+                <div class="user-info" id="user-info" style="display: none;">
+                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="User">
+                    <span>Utilisateur</span>
+                    <div class="user-dropdown">
+                        <a href="#profile"><i class="fas fa-user"></i> Mon Profil</a>
+                        <a href="#" id="user-logout-btn"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
                     </div>
                 </div>
             </div>
@@ -1126,23 +1182,6 @@
                 <h1>Découvrez le Bénin comme jamais auparavant</h1>
                 <p>Monarke vous invite à explorer les trésors cachés, la culture vibrante et les paysages époustouflants du Bénin. Une expérience touristique authentique et inoubliable.</p>
                 <a href="#destinations" class="btn">Commencer l'aventure</a>
-            </div>
-        </div>
-    </section>
-
-    <section id="about">
-        <div class="container">
-            <h2>À propos de Monarke</h2>
-            <div class="about-container">
-                <div class="about-content">
-                    <p>Monarke est une initiative touristique innovante qui vise à mettre en valeur le patrimoine culturel et naturel du Bénin. Fondée en 2023, notre mission est de créer des expériences authentiques et mémorables pour les voyageurs du monde entier.</p>
-                    <p>Nous collaborons avec les communautés locales pour développer un tourisme durable qui profite à la fois aux visiteurs et aux résidents. Nos circuits sont soigneusement conçus pour vous faire découvrir les trésors cachés du pays tout en respectant les traditions et l'environnement.</p>
-                    <p>Notre équipe de guides experts possède une connaissance approfondie de l'histoire, de la culture et de la géographie du Bénin. Ils sont passionnés par leur travail et s'engagent à vous offrir une expérience éducative et divertissante.</p>
-                    <a href="#" class="btn">Voir plus</a>
-                </div>
-                <div class="about-image">
-                    <img src="https://images.unsplash.com/photo-1543429776-2782fc586c7a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=900&q=80" alt="Paysage béninois">
-                </div>
             </div>
         </div>
     </section>
@@ -1554,6 +1593,184 @@
         </div>
     </section>
 
+    <!-- Nouvelle section Historique -->
+    <section id="history">
+        <div class="container">
+            <h2>Histoire du Bénin</h2>
+            <div class="about-container">
+                <div class="about-content">
+                    <p>Le Bénin, autrefois appelé Dahomey, est un pays d'Afrique de l'Ouest avec une histoire riche et complexe. Il a été le siège de plusieurs royaumes, dont le plus célèbre est le Royaume du Dahomey, connu pour ses Amazones, une unité militaire féminine redoutable.</p>
+                    <p>Le pays a été un important centre de la traite des esclaves pendant la période coloniale, avec des sites comme Ouidah qui était un port majeur d'embarquement. Après l'abolition, le Bénin est devenu une colonie française jusqu'à son indépendance en 1960.</p>
+                    <p>Aujourd'hui, le Bénin est une république démocratique qui préserve soigneusement son patrimoine historique. Des sites comme la Route des Esclaves, les Palais Royaux d'Abomey et la ville de Porto-Novo, classée au patrimoine mondial de l'UNESCO, témoignent de ce passé.</p>
+                </div>
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1614541085974-1a1d3e0b8a4c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Histoire du Bénin">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nouvelle section Plages -->
+    <section id="beaches">
+        <div class="container">
+            <h2>Plages du Bénin</h2>
+            <div class="destinations-container">
+                <div class="destination-card">
+                    <div class="destination-image">
+                        <img src="https://images.unsplash.com/photo-1534452203293-494d7ddbf7e0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Plage de Fidjrosse">
+                    </div>
+                    <div class="destination-content">
+                        <h3>Plage de Fidjrosse</h3>
+                        <p>La plage la plus populaire de Cotonou, idéale pour des promenades au coucher du soleil et des dégustations de poissons grillés.</p>
+                        <div class="destination-actions">
+                            <a href="#hotels?location=Fidjrosse" class="btn">Voir les hôtels</a>
+                            <a href="#restaurants?location=Fidjrosse" class="btn btn-outline">Voir les restaurants</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="destination-card">
+                    <div class="destination-image">
+                        <img src="https://images.unsplash.com/photo-1505228395891-9a51e7e86bf6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1332&q=80" alt="Plage de Grand-Popo">
+                    </div>
+                    <div class="destination-content">
+                        <h3>Plage de Grand-Popo</h3>
+                        <p>Une étendue de sable fin bordée de cocotiers, parfaite pour se détendre et profiter de l'océan Atlantique.</p>
+                        <div class="destination-actions">
+                            <a href="#hotels?location=Grand-Popo" class="btn">Voir les hôtels</a>
+                            <a href="#restaurants?location=Grand-Popo" class="btn btn-outline">Voir les restaurants</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="destination-card">
+                    <div class="destination-image">
+                        <img src="https://images.unsplash.com/photo-1519046904884-53103b34b206?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Plage de Ouidah">
+                    </div>
+                    <div class="destination-content">
+                        <h3>Plage de Ouidah</h3>
+                        <p>Une plage historique, point de départ de la Route des Esclaves, avec un fort patrimoine culturel et naturel.</p>
+                        <div class="destination-actions">
+                            <a href="#hotels?location=Ouidah" class="btn">Voir les hôtels</a>
+                            <a href="#restaurants?location=Ouidah" class="btn btn-outline">Voir les restaurants</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nouvelle section Économique -->
+    <section id="economy">
+        <div class="container">
+            <h2>Économie du Bénin</h2>
+            <div class="about-container">
+                <div class="about-content">
+                    <p>L'économie du Bénin repose principalement sur l'agriculture, le commerce transfrontalier et les services. Le coton est la principale culture d'exportation, représentant environ 40% des recettes d'exportation du pays.</p>
+                    <p>Le port de Cotonou est un moteur économique important, servant de point d'entrée pour les pays enclavés voisins comme le Niger et le Burkina Faso. Le tourisme est un secteur en croissance, avec un potentiel important grâce au riche patrimoine culturel et naturel du pays.</p>
+                    <p>Le gouvernement béninois a entrepris des réformes pour améliorer le climat des affaires et attirer les investissements étrangers. Des secteurs comme les technologies de l'information et l'agro-industrie sont en plein développement.</p>
+                </div>
+                <div class="about-image">
+                    <div class="chart">
+                        <div class="chart-title">Principaux Secteurs Économiques</div>
+                        <div class="chart-content">
+                            <div class="bar" style="height: 80%;">
+                                <div class="bar-value">40%</div>
+                                <div class="bar-label">Agriculture</div>
+                            </div>
+                            <div class="bar" style="height: 65%;">
+                                <div class="bar-value">25%</div>
+                                <div class="bar-label">Commerce</div>
+                            </div>
+                            <div class="bar" style="height: 70%;">
+                                <div class="bar-value">30%</div>
+                                <div class="bar-label">Services</div>
+                            </div>
+                            <div class="bar" style="height: 40%;">
+                                <div class="bar-value">5%</div>
+                                <div class="bar-label">Tourisme</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chart-container">
+                <div class="chart">
+                    <div class="chart-title">Croissance du Tourisme (2018-2023)</div>
+                    <div class="chart-content">
+                        <div class="bar" style="height: 20%;">
+                            <div class="bar-value">120K</div>
+                            <div class="bar-label">2018</div>
+                        </div>
+                        <div class="bar" style="height: 35%;">
+                            <div class="bar-value">210K</div>
+                            <div class="bar-label">2019</div>
+                        </div>
+                        <div class="bar" style="height: 15%;">
+                            <div class="bar-value">90K</div>
+                            <div class="bar-label">2020</div>
+                        </div>
+                        <div class="bar" style="height: 30%;">
+                            <div class="bar-value">180K</div>
+                            <div class="bar-label">2021</div>
+                        </div>
+                        <div class="bar" style="height: 50%;">
+                            <div class="bar-value">300K</div>
+                            <div class="bar-label">2022</div>
+                        </div>
+                        <div class="bar" style="height: 70%;">
+                            <div class="bar-value">420K</div>
+                            <div class="bar-label">2023</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chart">
+                    <div class="chart-title">Répartition des Visiteurs par Nationalité</div>
+                    <div class="chart-content">
+                        <div class="bar" style="height: 60%; background-color: #3498db;">
+                            <div class="bar-value">35%</div>
+                            <div class="bar-label">France</div>
+                        </div>
+                        <div class="bar" style="height: 45%; background-color: #2ecc71;">
+                            <div class="bar-value">25%</div>
+                            <div class="bar-label">Nigeria</div>
+                        </div>
+                        <div class="bar" style="height: 30%; background-color: #9b59b6;">
+                            <div class="bar-value">15%</div>
+                            <div class="bar-label">USA</div>
+                        </div>
+                        <div class="bar" style="height: 25%; background-color: #f1c40f;">
+                            <div class="bar-value">10%</div>
+                            <div class="bar-label">Allemagne</div>
+                        </div>
+                        <div class="bar" style="height: 20%; background-color: #e67e22;">
+                            <div class="bar-value">15%</div>
+                            <div class="bar-label">Autres</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section À Propos déplacée ici -->
+    <section id="about">
+        <div class="container">
+            <h2>À propos de Monarke</h2>
+            <div class="about-container">
+                <div class="about-content">
+                    <p>Monarke est une initiative touristique innovante qui vise à mettre en valeur le patrimoine culturel et naturel du Bénin. Fondée en 2023, notre mission est de créer des expériences authentiques et mémorables pour les voyageurs du monde entier.</p>
+                    <p>Nous collaborons avec les communautés locales pour développer un tourisme durable qui profite à la fois aux visiteurs et aux résidents. Nos circuits sont soigneusement conçus pour vous faire découvrir les trésors cachés du pays tout en respectant les traditions et l'environnement.</p>
+                    <p>Notre équipe de guides experts possède une connaissance approfondie de l'histoire, de la culture et de la géographie du Bénin. Ils sont passionnés par leur travail et s'engagent à vous offrir une expérience éducative et divertissante.</p>
+                    <a href="#" class="btn">Voir plus</a>
+                </div>
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1543429776-2782fc586c7a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=900&q=80" alt="Paysage béninois">
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="admin">
         <div class="container">
             <h2>Espace Administrateur</h2>
@@ -1852,10 +2069,10 @@
                 <div class="footer-logo">MONARKE</div>
                 <p>Votre guide pour découvrir les merveilles du Bénin</p>
                 <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="https://facebook.com/monarkebj" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://twitter.com/monarkebj" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="https://instagram.com/monarkebj" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://youtube.com/monarkebj" target="_blank"><i class="fab fa-youtube"></i></a>
                 </div>
                 <div class="copyright">
                     &copy; 2025 Monarke Tourism. Tous droits réservés.
@@ -1871,20 +2088,27 @@
             const mainNav = document.getElementById('main-nav');
             const sections = document.querySelectorAll('section');
             const adminInfo = document.getElementById('admin-info');
+            const userInfo = document.getElementById('user-info');
             const logoutBtn = document.getElementById('logout-btn');
+            const userLogoutBtn = document.getElementById('user-logout-btn');
             const adminLogout = document.getElementById('admin-logout');
             
             // Simulate admin login
             const isAdmin = true; // Set to false for regular users
+            const isLoggedIn = true; // Set to false for visitors
             
             // Hide splash screen after delay
             setTimeout(() => {
                 splashScreen.classList.add('fade-out');
                 mainNav.classList.add('active');
                 
-                // Show admin info if logged in as admin
-                if (isAdmin) {
-                    adminInfo.style.display = 'flex';
+                // Show user info based on login status and role
+                if (isLoggedIn) {
+                    if (isAdmin) {
+                        adminInfo.style.display = 'flex';
+                    } else {
+                        userInfo.style.display = 'flex';
+                    }
                 }
             }, 3000);
             
@@ -1928,6 +2152,7 @@
             // Logout functionality
             function logout() {
                 adminInfo.style.display = 'none';
+                userInfo.style.display = 'none';
                 document.querySelectorAll('section').forEach(section => {
                     section.classList.remove('active');
                 });
@@ -1935,6 +2160,7 @@
             }
             
             logoutBtn.addEventListener('click', logout);
+            userLogoutBtn.addEventListener('click', logout);
             adminLogout.addEventListener('click', logout);
             
             // Database tabs
