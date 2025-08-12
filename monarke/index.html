@@ -3,25 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monarke - Découvrez la beauté du Bénin</title>
+    <title>GDIZ | E-commerce Haut de Gamme Béninois</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Variables et styles globaux */
+        /* Reset et Base */
         :root {
-            --primary-color: #000000;
-            --secondary-color: #ffffff;
-            --accent-color: #e74c3c;
-            --light-gray: #f5f5f5;
-            --dark-gray: #333333;
-            --spacing-xs: 4px;
-            --spacing-sm: 8px;
-            --spacing-md: 16px;
-            --spacing-lg: 24px;
-            --spacing-xl: 32px;
-            --spacing-xxl: 64px;
-            --border-radius: 5px;
-            --transition: all 0.3s ease;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --primary: #8B5A2B;
+            --primary-dark: #5D3A1A;
+            --primary-light: #B07D4E;
+            --secondary: #FFFFFF;
+            --text: #333333;
+            --bg: #FAF8F5;
+            --dark-bg: #1A1A1A;
+            --dark-text: #F0F0F0;
+            --accent: #3A86FF;
         }
 
         * {
@@ -31,844 +26,1410 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            background-color: var(--secondary-color);
-            color: var(--primary-color);
+            background-color: var(--bg);
+            color: var(--text);
             overflow-x: hidden;
-            padding-top: 70px; /* Pour la navigation fixe */
+            transition: background 0.5s ease;
         }
 
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 var(--spacing-md);
+        body.dark-mode {
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
         }
 
-        section {
-            padding: var(--spacing-xxl) 0;
-            min-height: 100vh;
-            display: none;
-        }
-
-        section.active {
-            display: block;
-        }
-
+        /* Typographie */
         h1, h2, h3, h4 {
             font-weight: 700;
-            margin-bottom: var(--spacing-md);
+            line-height: 1.2;
+            margin-bottom: 1rem;
         }
 
         h1 {
-            font-size: 2.5rem;
-            letter-spacing: 1px;
+            font-size: 3.5rem;
+            background: linear-gradient(45deg, var(--primary), var(--primary-light));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         h2 {
-            font-size: 2rem;
+            font-size: 2.5rem;
+            color: var(--primary);
             position: relative;
-            padding-bottom: var(--spacing-sm);
+            display: inline-block;
+            margin-bottom: 2rem;
         }
 
         h2::after {
             content: '';
             position: absolute;
-            bottom: 0;
+            bottom: -10px;
             left: 0;
-            width: 60px;
+            width: 60%;
             height: 3px;
-            background-color: var(--accent-color);
+            background: var(--primary);
+        }
+
+        h3 {
+            font-size: 1.8rem;
+            color: var(--primary-dark);
         }
 
         p {
             line-height: 1.6;
-            margin-bottom: var(--spacing-md);
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
         }
 
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+
+        /* Layout */
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            padding: 6rem 0;
+            position: relative;
+            overflow: hidden;
+            display: none; /* Cache toutes les sections par défaut */
+        }
+
+        section.active {
+            display: block; /* Affiche la section active */
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        /* Boutons */
         .btn {
             display: inline-block;
-            padding: var(--spacing-sm) var(--spacing-lg);
-            background-color: var(--primary-color);
-            color: var(--secondary-color);
+            padding: 1rem 2rem;
+            background-color: var(--primary);
+            color: white;
             border: none;
-            border-radius: var(--border-radius);
+            border-radius: 30px;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
             cursor: pointer;
-            transition: var(--transition);
-            text-decoration: none;
-            text-align: center;
-            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+            z-index: -1;
+        }
+
+        .btn:hover::before {
+            left: 100%;
         }
 
         .btn:hover {
-            background-color: var(--accent-color);
             transform: translateY(-3px);
-            box-shadow: var(--shadow);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
 
         .btn-outline {
-            background-color: transparent;
-            border: 2px solid var(--primary-color);
-            color: var(--primary-color);
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
         }
 
         .btn-outline:hover {
-            background-color: var(--primary-color);
-            color: var(--secondary-color);
+            background: var(--primary);
+            color: white;
         }
 
-        .btn-admin {
-            background-color: var(--accent-color);
-            margin: var(--spacing-sm) 0;
+        .btn-dark {
+            background-color: var(--dark-bg);
+            color: white;
         }
 
-        /* Splash Screen */
-        #splash-screen {
+        /* Header & Navigation */
+        header {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
-            background-color: var(--primary-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
+            padding: 1.5rem 0;
             z-index: 1000;
-            transition: opacity 0.8s ease;
+            transition: all 0.5s ease;
+            backdrop-filter: blur(10px);
+            background-color: rgba(139, 90, 43, 0.9);
         }
 
-        #splash-screen.fade-out {
-            opacity: 0;
-            pointer-events: none;
+        header.scrolled {
+            padding: 1rem 0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .logo {
-            font-size: 3rem;
-            font-weight: 800;
-            color: var(--secondary-color);
-            text-transform: uppercase;
-            letter-spacing: 5px;
-            margin-bottom: var(--spacing-md);
-            animation: pulse 2s infinite;
-            text-align: center;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background-color: rgba(255, 255, 255, 0.95);
-            box-shadow: var(--shadow);
-            z-index: 100;
-            display: none;
-            padding: var(--spacing-sm) 0;
-        }
-
-        nav.active {
-            display: block;
-        }
-
-        .nav-container {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 0 var(--spacing-md);
+            gap: 1rem;
         }
 
-        .nav-logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--primary-color);
-            text-decoration: none;
-        }
-
-        .nav-menu {
-            position: fixed;
-            top: 70px;
-            left: 0;
-            right: 0;
-            background: var(--secondary-color);
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            background-color: white;
+            border-radius: 50%;
             display: flex;
-            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .logo-text span {
+            color: var(--dark-bg);
+        }
+
+        nav ul {
+            display: flex;
             list-style: none;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-            box-shadow: var(--shadow);
-            z-index: 99;
+            gap: 2rem;
         }
 
-        .nav-menu.active {
-            max-height: 500px;
-        }
-
-        .nav-menu li {
-            margin: 0;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-        }
-
-        .nav-menu a {
-            display: block;
-            text-decoration: none;
-            color: var(--primary-color);
+        nav a {
+            color: white;
             font-weight: 600;
-            transition: var(--transition);
-            padding: var(--spacing-lg) var(--spacing-md);
             position: relative;
+            padding: 0.5rem 0;
         }
 
-        .nav-menu a::after {
+        nav a::after {
             content: '';
             position: absolute;
             bottom: 0;
-            left: var(--spacing-md);
-            width: calc(100% - 32px);
+            left: 0;
+            width: 0;
             height: 2px;
-            background-color: var(--accent-color);
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
+            background-color: white;
+            transition: width 0.3s ease;
         }
 
-        .nav-menu a:hover::after {
-            transform: scaleX(1);
-        }
-
-        .hamburger {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 30px;
-            height: 21px;
-            cursor: pointer;
-            z-index: 101;
-        }
-
-        .hamburger span {
-            display: block;
-            height: 3px;
+        nav a:hover::after {
             width: 100%;
-            background-color: var(--primary-color);
-            border-radius: 10px;
-            transition: var(--transition);
         }
 
-        .hamburger.active span:nth-child(1) {
-            transform: translateY(9px) rotate(45deg);
-        }
-
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active span:nth-child(3) {
-            transform: translateY(-9px) rotate(-45deg);
-        }
-
-        .user-actions {
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-sm);
-        }
-
-        .user-actions .btn {
-            margin-left: 0;
-            padding: 8px 12px;
-            font-size: 0.8rem;
-        }
-
-        .user-info {
+        .mobile-menu-btn {
             display: none;
-            align-items: center;
-            margin-left: var(--spacing-sm);
-            position: relative;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
             cursor: pointer;
         }
 
-        .user-info img {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            margin-right: var(--spacing-xs);
-            object-fit: cover;
+        .theme-toggle, .profile-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-left: 1rem;
         }
 
-        .user-dropdown {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background-color: var(--secondary-color);
-            box-shadow: var(--shadow);
-            border-radius: var(--border-radius);
-            width: 200px;
-            padding: var(--spacing-md);
-            display: none;
-            z-index: 10;
-        }
-
-        .user-info:hover .user-dropdown {
-            display: block;
-        }
-
-        .user-dropdown a {
-            display: block;
-            padding: var(--spacing-sm) 0;
-            color: var(--primary-color);
-            text-decoration: none;
-            transition: var(--transition);
+        /* Hero Section */
+        #hero {
+            height: 100vh;
             display: flex;
             align-items: center;
-        }
-
-        .user-dropdown a i {
-            margin-right: var(--spacing-sm);
-            width: 20px;
+            justify-content: center;
             text-align: center;
-        }
-
-        .user-dropdown a:hover {
-            color: var(--accent-color);
-        }
-
-        /* Home Section */
-        #home {
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1501555088652-021faa106b9b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80') no-repeat center center/cover;
-            color: var(--secondary-color);
-            display: flex;
-            align-items: center;
-            text-align: center;
-            padding-top: var(--spacing-xxl);
-            padding-bottom: var(--spacing-xxl);
-        }
-
-        .home-content {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: var(--spacing-xl);
-        }
-
-        .home-content p {
-            font-size: 1.1rem;
-            margin-bottom: var(--spacing-xl);
-        }
-
-        /* Card Styles */
-        .card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: var(--spacing-lg);
-            margin-top: var(--spacing-lg);
-        }
-
-        .card {
-            background-color: var(--secondary-color);
-            border-radius: var(--border-radius);
+            position: relative;
             overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1566438480900-0609be27a4be?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2094&q=80') no-repeat center center/cover;
+            color: white;
         }
 
-        .card:hover {
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            animation: fadeIn 1.5s ease;
+        }
+
+        .hero-slogan {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .hero-scroll {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        .hero-scroll i {
+            font-size: 2rem;
+            color: white;
+        }
+
+        /* About Section */
+        #about {
+            background-color: var(--secondary);
+        }
+
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-image {
+            flex: 1;
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .about-image:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Products Section */
+        #products {
+            background-color: var(--bg);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background-color: var(--secondary);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .product-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
         }
 
-        .card-image {
+        .product-image {
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.1);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-price {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .product-rating {
+            color: #FFC107;
+            margin-bottom: 1rem;
+        }
+
+        .product-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .add-to-cart {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .add-to-cart:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .wishlist {
+            background: none;
+            border: none;
+            color: #ccc;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .wishlist.active, .wishlist:hover {
+            color: #FF4081;
+        }
+
+        /* Services Section */
+        #services {
+            background: linear-gradient(rgba(139, 90, 43, 0.1), rgba(139, 90, 43, 0.1));
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background-color: var(--secondary);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Blog Section */
+        #blog {
+            background-color: var(--bg);
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .blog-card {
+            background-color: var(--secondary);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+
+        .blog-image {
             height: 200px;
             overflow: hidden;
         }
 
-        .card-image img {
+        .blog-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: var(--transition);
+            transition: transform 0.5s ease;
         }
 
-        .card:hover .card-image img {
+        .blog-card:hover .blog-image img {
             transform: scale(1.1);
         }
 
-        .card-content {
-            padding: var(--spacing-lg);
+        .blog-content {
+            padding: 1.5rem;
         }
 
-        .card-content h3 {
-            font-size: 1.3rem;
-            margin-bottom: var(--spacing-sm);
+        .blog-date {
+            font-size: 0.9rem;
+            color: #777;
+            margin-bottom: 0.5rem;
         }
 
-        .card-content p {
-            margin-bottom: var(--spacing-lg);
-            color: var(--dark-gray);
+        .blog-title {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .blog-excerpt {
+            margin-bottom: 1.5rem;
             font-size: 0.95rem;
         }
 
-        .card-actions {
-            display: flex;
-            gap: var(--spacing-sm);
-            flex-wrap: wrap;
-        }
-
-        .card-actions .btn {
-            flex: 1;
-            min-width: 120px;
-        }
-
-        /* Hotel specific */
-        .hotel-rating {
-            color: #f39c12;
-            margin-bottom: var(--spacing-sm);
-            font-size: 0.9rem;
-        }
-
-        .hotel-price {
-            font-weight: 700;
-            font-size: 1.1rem;
-            color: var(--accent-color);
-            margin-bottom: var(--spacing-sm);
-        }
-
-        .hotel-amenities {
-            display: flex;
-            flex-wrap: wrap;
-            gap: var(--spacing-xs);
-            margin-bottom: var(--spacing-md);
-        }
-
-        .amenity {
-            background-color: var(--light-gray);
-            padding: 4px 8px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-        }
-
-        /* Restaurant specific */
-        .restaurant-cuisine {
-            color: #e74c3c;
+        .read-more {
+            color: var(--primary);
             font-weight: 600;
-            margin-bottom: var(--spacing-sm);
-            font-size: 0.9rem;
-        }
-
-        .restaurant-rating {
-            color: #f39c12;
-            margin-bottom: var(--spacing-sm);
-            font-size: 0.9rem;
-        }
-
-        /* Booking Section */
-        #booking {
-            background-color: var(--secondary-color);
-        }
-
-        .booking-container {
-            display: flex;
-            flex-direction: column;
-            gap: var(--spacing-xl);
-        }
-
-        .booking-form-container,
-        .booking-summary {
-            background-color: var(--light-gray);
-            padding: var(--spacing-lg);
-            border-radius: var(--border-radius);
-        }
-
-        .booking-steps {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: var(--spacing-xl);
-            flex-wrap: wrap;
-        }
-
-        .step {
-            text-align: center;
-            position: relative;
-            flex: 1;
-            min-width: 70px;
-            margin-bottom: var(--spacing-md);
-        }
-
-        .step:not(:last-child)::after {
-            content: '';
-            position: absolute;
-            top: 20px;
-            right: -50%;
-            width: 100%;
-            height: 2px;
-            background-color: #ddd;
-            z-index: 1;
-        }
-
-        .step-number {
-            width: 40px;
-            height: 40px;
-            background-color: var(--primary-color);
-            color: var(--secondary-color);
-            border-radius: 50%;
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            justify-content: center;
-            margin: 0 auto var(--spacing-sm);
-            position: relative;
-            z-index: 2;
+            gap: 0.5rem;
         }
 
-        .step.active .step-number {
-            background-color: var(--accent-color);
+        .read-more i {
+            transition: transform 0.3s ease;
         }
 
-        .step-label {
-            font-weight: 600;
-            font-size: 0.9rem;
+        .read-more:hover i {
+            transform: translateX(5px);
         }
 
-        .booking-tabs {
-            display: flex;
-            gap: var(--spacing-sm);
-            margin-bottom: var(--spacing-lg);
-            flex-wrap: wrap;
+        /* Contact Section */
+        #contact {
+            background: linear-gradient(rgba(139, 90, 43, 0.1), rgba(139, 90, 43, 0.1));
         }
 
-        .booking-tab {
-            flex: 1;
-            min-width: 100px;
-            text-align: center;
-            padding: var(--spacing-sm);
-            background-color: var(--secondary-color);
-            border: 1px solid #ddd;
-            border-radius: var(--border-radius);
-            cursor: pointer;
-            transition: var(--transition);
-            font-size: 0.9rem;
+        .contact-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
         }
 
-        .booking-tab.active {
-            background-color: var(--primary-color);
-            color: var(--secondary-color);
-            border-color: var(--primary-color);
-        }
-
-        .booking-tab:hover:not(.active) {
-            background-color: #f9f9f9;
-        }
-
-        .booking-content {
-            display: none;
-        }
-
-        .booking-content.active {
-            display: block;
-        }
-
-        .form-row {
+        .contact-info {
             display: flex;
             flex-direction: column;
-            gap: var(--spacing-md);
-            margin-bottom: var(--spacing-md);
+            gap: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .contact-icon {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .contact-text h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-text p, .contact-text a {
+            color: var(--text);
+            font-size: 1rem;
+        }
+
+        body.dark-mode .contact-text p, body.dark-mode .contact-text a {
+            color: var(--dark-text);
+        }
+
+        .contact-form {
+            background-color: var(--secondary);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
         }
 
         .form-group {
-            width: 100%;
-            margin-bottom: var(--spacing-md);
+            margin-bottom: 1.5rem;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: var(--spacing-xs);
+            margin-bottom: 0.5rem;
             font-weight: 600;
-            font-size: 0.95rem;
         }
 
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
+        .form-control {
             width: 100%;
-            padding: var(--spacing-sm);
+            padding: 0.8rem 1rem;
             border: 1px solid #ddd;
-            border-radius: var(--border-radius);
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(139, 90, 43, 0.2);
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .map-container {
+            height: 300px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-dark);
+            color: white;
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-logo-img {
+            width: 40px;
+            height: 40px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        .footer-logo-text {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .footer-about p {
+            margin-bottom: 1.5rem;
+            opacity: 0.8;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .footer-social a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .footer-social a:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-links h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-links h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: white;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            opacity: 0.8;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+            transform: translateX(5px);
+        }
+
+        .footer-newsletter p {
+            opacity: 0.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            margin-bottom: 1.5rem;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 0.8rem 1rem;
+            border: none;
+            border-radius: 5px 0 0 5px;
             font-size: 1rem;
         }
 
-        .summary-item {
+        .newsletter-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0 1.5rem;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-btn:hover {
+            background-color: var(--primary-light);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .footer-bottom p {
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
+            40% { transform: translateY(-20px) translateX(-50%); }
+            60% { transform: translateY(-10px) translateX(-50%); }
+        }
+
+        /* Page Transitions */
+        .page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--primary);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            transform: translateY(-100%);
+            transition: transform 1s ease;
+        }
+
+        .page.active {
+            transform: translateY(0);
+        }
+
+        .page h2 {
+            color: white;
+            font-size: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .page-content {
+            max-width: 800px;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+            margin: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease 0.3s;
+        }
+
+        .page.active .page-content {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .close-page {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            h1 {
+                font-size: 2.8rem;
+            }
+            
+            h2 {
+                font-size: 2rem;
+            }
+            
+            section {
+                padding: 4rem 0;
+            }
+            
+            .about-content {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                height: 100vh;
+                background-color: var(--primary-dark);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 2rem;
+                transition: right 0.5s ease;
+                z-index: 999;
+            }
+            
+            nav ul.active {
+                right: 0;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+                z-index: 1000;
+            }
+            
+            .header-container {
+                padding: 0 1rem;
+            }
+            
+            .hero-slogan {
+                font-size: 1.2rem;
+            }
+            
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+            
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .btn {
+                padding: 0.8rem 1.5rem;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Cart Modal */
+        .cart-modal {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            max-width: 400px;
+            height: 100%;
+            background-color: var(--secondary);
+            box-shadow: -5px 0 30px rgba(0,0,0,0.1);
+            z-index: 1100;
+            transition: right 0.5s ease;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        body.dark-mode .cart-modal {
+            background-color: var(--dark-bg);
+        }
+
+        .cart-modal.active {
+            right: 0;
+        }
+
+        .cart-header {
             display: flex;
             justify-content: space-between;
-            padding: var(--spacing-sm) 0;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
             border-bottom: 1px solid #eee;
         }
 
-        .summary-total {
+        body.dark-mode .cart-header {
+            border-bottom-color: #444;
+        }
+
+        .cart-title {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #777;
+        }
+
+        body.dark-mode .close-cart {
+            color: #aaa;
+        }
+
+        .cart-items {
+            margin-bottom: 2rem;
+        }
+
+        .cart-item {
             display: flex;
-            justify-content: space-between;
-            font-weight: 700;
-            font-size: 1.2rem;
-            margin-top: var(--spacing-md);
-            padding-top: var(--spacing-md);
-            border-top: 2px solid var(--primary-color);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
         }
 
-        /* Testimonials Section */
-        .testimonials-container {
-            display: flex;
-            flex-direction: column;
-            gap: var(--spacing-xl);
-            margin-top: var(--spacing-lg);
+        body.dark-mode .cart-item {
+            border-bottom-color: #444;
         }
 
-        .testimonial {
-            display: flex;
-            flex-direction: column;
-            gap: var(--spacing-md);
-            padding: var(--spacing-lg);
-            border-radius: var(--border-radius);
-            background-color: var(--light-gray);
-            transition: var(--transition);
-        }
-
-        .testimonial:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow);
-        }
-
-        .testimonial-image {
-            width: 100%;
-            height: 250px;
-            border-radius: var(--border-radius);
+        .cart-item-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 5px;
             overflow: hidden;
         }
 
-        .testimonial-image img {
+        .cart-item-img img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
 
-        .testimonial-content {
+        .cart-item-details {
             flex: 1;
         }
 
-        .testimonial-content p {
-            font-style: italic;
-            margin-bottom: var(--spacing-sm);
+        .cart-item-title {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
         }
 
-        .testimonial-content .name {
+        .cart-item-price {
             font-weight: 600;
-            color: var(--accent-color);
+            color: var(--primary);
+            margin-bottom: 0.5rem;
         }
 
-        .view-all {
-            text-align: center;
-            margin-top: var(--spacing-xl);
-        }
-
-        /* Admin Section */
-        #admin {
-            background-color: var(--light-gray);
-        }
-
-        .admin-dashboard {
+        .cart-item-quantity {
             display: flex;
-            flex-direction: column;
-            gap: var(--spacing-lg);
-            background-color: var(--secondary-color);
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            box-shadow: var(--shadow);
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        .admin-sidebar {
-            background-color: var(--primary-color);
-            color: var(--secondary-color);
-            padding: var(--spacing-lg);
-        }
-
-        .admin-sidebar h3 {
-            padding-bottom: var(--spacing-sm);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-            margin-bottom: var(--spacing-lg);
-        }
-
-        .admin-menu {
-            list-style: none;
+        .quantity-btn {
+            width: 25px;
+            height: 25px;
+            border: 1px solid #ddd;
+            background: none;
+            border-radius: 50%;
+            cursor: pointer;
             display: flex;
-            flex-wrap: wrap;
-            gap: var(--spacing-sm);
+            align-items: center;
+            justify-content: center;
         }
 
-        .admin-menu li {
-            margin-bottom: var(--spacing-sm);
+        body.dark-mode .quantity-btn {
+            border-color: #555;
         }
 
-        .admin-menu a {
-            color: var(--secondary-color);
-            text-decoration: none;
-            display: block;
-            padding: var(--spacing-sm);
-            transition: var(--transition);
-            border-radius: var(--border-radius);
-            font-size: 0.9rem;
-            white-space: nowrap;
-        }
-
-        .admin-menu a:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .admin-content {
-            padding: var(--spacing-lg);
-        }
-
-        .admin-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: var(--spacing-md);
-            margin-bottom: var(--spacing-lg);
-        }
-
-        .stat-card {
-            background-color: var(--light-gray);
-            padding: var(--spacing-lg);
-            border-radius: var(--border-radius);
+        .quantity-value {
+            min-width: 30px;
             text-align: center;
         }
 
-        .stat-card .number {
-            font-size: 2rem;
+        .remove-item {
+            background: none;
+            border: none;
+            color: #ff4d4d;
+            cursor: pointer;
+            font-size: 1.2rem;
+            align-self: flex-start;
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.2rem;
             font-weight: 700;
-            color: var(--accent-color);
-            margin-bottom: var(--spacing-xs);
+            margin-bottom: 2rem;
         }
 
-        .stat-card .label {
-            font-size: 0.9rem;
-            color: var(--dark-gray);
-        }
-
-        /* Database Section */
-        .database-section {
-            margin-top: var(--spacing-xl);
-            padding: var(--spacing-lg);
-            background-color: var(--light-gray);
-            border-radius: var(--border-radius);
-            overflow-x: auto;
-        }
-
-        .db-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: var(--spacing-md);
-            min-width: 600px;
-        }
-
-        .db-table th, .db-table td {
-            padding: var(--spacing-sm);
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-            font-size: 0.9rem;
-        }
-
-        .db-table th {
-            background-color: var(--primary-color);
-            color: var(--secondary-color);
-        }
-
-        .db-table tr:hover {
-            background-color: rgba(0, 0, 0, 0.05);
-        }
-
-        .db-actions {
-            display: flex;
-            gap: var(--spacing-xs);
-        }
-
-        .db-actions .btn {
-            padding: 6px 10px;
-            font-size: 0.8rem;
-        }
-
-        /* Profile Section */
-        #profile {
-            background-color: var(--light-gray);
-        }
-
-        .profile-container {
+        .cart-actions {
             display: flex;
             flex-direction: column;
-            gap: var(--spacing-xl);
+            gap: 1rem;
         }
 
-        .profile-sidebar {
+        .cart-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            background-color: var(--secondary-color);
-            border-radius: var(--border-radius);
-            padding: var(--spacing-lg);
-            box-shadow: var(--shadow);
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1090;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
         }
 
-        .profile-menu {
-            list-style: none;
+        .cart-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Cart Icon */
+        .cart-icon {
+            position: relative;
+            margin-left: 1rem;
+            cursor: pointer;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: var(--dark-bg);
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
             display: flex;
-            flex-wrap: wrap;
-            gap: var(--spacing-sm);
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
         }
 
-        .profile-menu li {
-            margin-bottom: var(--spacing-sm);
+        body.dark-mode .cart-count {
+            background-color: var(--primary);
         }
 
-        .profile-menu a {
-            display: block;
-            padding: var(--spacing-sm) var(--spacing-md);
-            color: var(--primary-color);
-            text-decoration: none;
-            border-radius: var(--border-radius);
-            transition: var(--transition);
-            font-size: 0.9rem;
-            border: 1px solid #eee;
+        /* Product Page */
+        .product-page {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
         }
 
-        .profile-menu a:hover, .profile-menu a.active {
-            background-color: var(--accent-color);
-            color: var(--secondary-color);
-            border-color: var(--accent-color);
+        .product-gallery {
+            position: relative;
         }
 
-        .profile-content {
+        .main-image {
             width: 100%;
-            background-color: var(--secondary-color);
-            border-radius: var(--border-radius);
-            padding: var(--spacing-lg);
-            box-shadow: var(--shadow);
+            height: 500px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .main-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .thumbnail-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+
+        .thumbnail {
+            height: 100px;
+            border-radius: 5px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .thumbnail.active {
+            border-color: var(--primary);
+        }
+
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-details h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: none;
+            -webkit-background-clip: initial;
+            background-clip: initial;
+            color: var(--primary);
+        }
+
+        .product-price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .product-rating-stars {
+            color: #FFC107;
+        }
+
+        .product-rating-count {
+            color: #777;
+            font-size: 0.9rem;
+        }
+
+        body.dark-mode .product-rating-count {
+            color: #aaa;
+        }
+
+        .product-description {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        .product-options {
+            margin-bottom: 2rem;
+        }
+
+        .option-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .option-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .option-values {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .option-value {
+            padding: 0.5rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode .option-value {
+            border-color: #555;
+        }
+
+        .option-value.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .quantity-btn-lg {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #ddd;
+            background: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        body.dark-mode .quantity-btn-lg {
+            border-color: #555;
+        }
+
+        .quantity-value-lg {
+            min-width: 50px;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+
+        .product-actions-lg {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .add-to-cart-lg {
+            flex: 1;
+            padding: 1rem;
+            font-size: 1rem;
+        }
+
+        .wishlist-lg {
+            width: 50px;
+            height: 50px;
+            border: 1px solid #ddd;
+            background: none;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #ccc;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode .wishlist-lg {
+            border-color: #555;
+        }
+
+        .wishlist-lg.active, .wishlist-lg:hover {
+            color: #FF4081;
+        }
+
+        .product-meta {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #eee;
+        }
+
+        body.dark-mode .product-meta {
+            border-top-color: #444;
+        }
+
+        .meta-item {
+            margin-bottom: 1rem;
+        }
+
+        .meta-title {
+            font-weight: 600;
+            margin-right: 0.5rem;
+        }
+
+        /* Profile Modal */
+        .profile-modal {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            max-width: 400px;
+            height: 100%;
+            background-color: var(--secondary);
+            box-shadow: -5px 0 30px rgba(0,0,0,0.1);
+            z-index: 1100;
+            transition: right 0.5s ease;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        body.dark-mode .profile-modal {
+            background-color: var(--dark-bg);
+        }
+
+        .profile-modal.active {
+            right: 0;
         }
 
         .profile-header {
             display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        body.dark-mode .profile-header {
+            border-bottom-color: #444;
+        }
+
+        .profile-title {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .close-profile {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #777;
+        }
+
+        body.dark-mode .close-profile {
+            color: #aaa;
+        }
+
+        .profile-content {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .profile-info {
+            display: flex;
             flex-direction: column;
             align-items: center;
-            margin-bottom: var(--spacing-lg);
-            text-align: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
         }
 
         .profile-avatar {
-            width: 120px;
-            height: 120px;
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
+            background-color: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: white;
+            position: relative;
             overflow: hidden;
-            margin-bottom: var(--spacing-md);
-            border: 5px solid var(--light-gray);
         }
 
         .profile-avatar img {
@@ -877,711 +1438,1605 @@
             object-fit: cover;
         }
 
-        .profile-info h2 {
-            margin-bottom: var(--spacing-xs);
-        }
-
-        .profile-stats {
-            display: flex;
-            justify-content: center;
-            gap: var(--spacing-lg);
-            margin-top: var(--spacing-md);
-            flex-wrap: wrap;
-        }
-
-        .profile-stat {
-            text-align: center;
-            min-width: 80px;
-        }
-
-        .profile-stat .number {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--accent-color);
-        }
-
-        .profile-stat .label {
-            font-size: 0.85rem;
-            color: var(--dark-gray);
-        }
-
-        /* Forms */
-        .form-container {
-            max-width: 500px;
-            margin: 0 auto;
-            background-color: var(--secondary-color);
-            padding: var(--spacing-xl);
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-        }
-
-        /* Charts */
-        .chart-container {
-            display: flex;
-            flex-direction: column;
-            gap: var(--spacing-md);
-            margin-top: var(--spacing-xl);
-        }
-
-        .chart {
-            width: 100%;
-            background-color: var(--secondary-color);
-            padding: var(--spacing-lg);
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-        }
-
-        .chart-title {
-            text-align: center;
-            margin-bottom: var(--spacing-lg);
-            color: var(--primary-color);
-        }
-
-        .chart-content {
-            height: 300px;
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-around;
-            padding: var(--spacing-md);
-            overflow-x: auto;
-        }
-
-        .bar {
-            min-width: 40px;
-            background-color: var(--accent-color);
-            position: relative;
-            border-radius: var(--border-radius) var(--border-radius) 0 0;
-            transition: height 0.5s ease;
-            margin: 0 5px;
-        }
-
-        .bar-label {
-            position: absolute;
-            bottom: -30px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 0.8rem;
-            color: var(--dark-gray);
-            white-space: nowrap;
-        }
-
-        .bar-value {
-            position: absolute;
-            top: -25px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-weight: 600;
-            font-size: 0.8rem;
-        }
-
-        /* Footer */
-        footer {
-            background-color: var(--primary-color);
-            color: var(--secondary-color);
-            padding: var(--spacing-xl) 0;
-            text-align: center;
-        }
-
-        .footer-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .footer-logo {
-            font-size: 1.8rem;
-            font-weight: 800;
-            margin-bottom: var(--spacing-md);
-        }
-
-        .social-links {
-            display: flex;
-            gap: var(--spacing-lg);
-            margin: var(--spacing-md) 0;
-        }
-
-        .social-links a {
-            color: var(--secondary-color);
+        .profile-name {
             font-size: 1.5rem;
-            transition: var(--transition);
+            font-weight: 600;
         }
 
-        .social-links a:hover {
-            color: var(--accent-color);
-        }
-
-        .copyright {
-            margin-top: var(--spacing-md);
+        .profile-email {
+            color: #777;
             font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.7);
         }
 
-        /* Responsive Design */
-        @media (min-width: 576px) {
-            .logo {
-                font-size: 4rem;
+        body.dark-mode .profile-email {
+            color: #aaa;
+        }
+
+        .profile-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .profile-btn {
+            padding: 0.8rem 1rem;
+            border-radius: 5px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .profile-btn i {
+            font-size: 1.2rem;
+        }
+
+        .profile-btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .profile-btn.outline {
+            background-color: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .profile-btn.outline:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        /* Responsive Product Page */
+        @media (max-width: 992px) {
+            .product-page {
+                grid-template-columns: 1fr;
             }
             
-            .form-row {
-                flex-direction: row;
-                flex-wrap: wrap;
-            }
-            
-            .form-group {
-                flex: 1;
-                min-width: 200px;
-            }
-            
-            .card-grid {
-                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            .main-image {
+                height: 400px;
             }
         }
 
-        @media (min-width: 768px) {
-            body {
-                padding-top: 0;
+        @media (max-width: 576px) {
+            .main-image {
+                height: 300px;
             }
             
-            .hamburger {
-                display: none;
+            .product-details h1 {
+                font-size: 2rem;
             }
             
-            .nav-menu {
-                position: static;
-                display: flex;
-                flex-direction: row;
-                max-height: none;
-                box-shadow: none;
-                background: transparent;
-            }
-            
-            .nav-menu li {
-                border-bottom: none;
-            }
-            
-            .nav-menu a {
-                padding: var(--spacing-sm) var(--spacing-md);
-            }
-            
-            .nav-menu a::after {
-                left: 0;
-                width: 100%;
-            }
-            
-            .user-info {
-                display: flex;
-            }
-            
-            .testimonial {
-                flex-direction: row;
-            }
-            
-            .testimonial-image {
-                width: 200px;
-                height: 200px;
-            }
-            
-            .booking-container {
-                flex-direction: row;
-            }
-            
-            .booking-form-container {
-                flex: 2;
-            }
-            
-            .booking-summary {
-                flex: 1;
-            }
-            
-            .admin-menu {
+            .product-actions-lg {
                 flex-direction: column;
             }
             
-            .profile-container {
-                flex-direction: row;
-            }
-            
-            .profile-sidebar {
-                width: 250px;
-            }
-            
-            .profile-content {
-                flex: 1;
-            }
-            
-            .profile-header {
-                flex-direction: row;
-                text-align: left;
-            }
-            
-            .profile-avatar {
-                margin-right: var(--spacing-lg);
-                margin-bottom: 0;
-            }
-            
-            .chart-container {
-                flex-direction: row;
-                flex-wrap: wrap;
-            }
-            
-            .chart {
-                flex: 1;
-                min-width: 300px;
+            .wishlist-lg {
+                width: 100%;
             }
         }
 
-        @media (min-width: 992px) {
-            h1 {
-                font-size: 3.5rem;
-            }
-            
-            h2 {
-                font-size: 2.5rem;
-            }
-            
-            .logo {
-                font-size: 5rem;
-            }
-            
-            .admin-dashboard {
-                flex-direction: row;
-            }
-            
-            .admin-sidebar {
-                width: 250px;
-            }
-            
-            .admin-content {
-                flex: 1;
-            }
+        /* Loading Spinner */
+        .spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(0,0,0,0.1);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        body.dark-mode ::-webkit-scrollbar-track {
+            background: #333;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-dark);
         }
     </style>
 </head>
 <body>
-    <!-- Splash Screen -->
-    <div id="splash-screen">
-        <div class="logo">MONARKE</div>
-        <p>Découvrez la beauté du Bénin</p>
+    <!-- Loading Screen -->
+    <div class="page" id="loading-page">
+        <div class="spinner"></div>
+        <h2>GDIZ</h2>
     </div>
 
-    <!-- Navigation -->
-    <nav id="main-nav">
-        <div class="container nav-container">
-            <a href="#home" class="nav-logo">MONARKE</a>
-            
-            <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            
-            <ul class="nav-menu" id="nav-menu">
-                <li><a href="#home" class="nav-link">Accueil</a></li>
-                <li><a href="#destinations" class="nav-link">Destinations</a></li>
-                <li><a href="#hotels" class="nav-link">Hôtels</a></li>
-                <li><a href="#restaurants" class="nav-link">Restaurants</a></li>
-                <li><a href="#booking" class="nav-link">Réservation</a></li>
-                <li><a href="#testimonials" class="nav-link">Témoignages</a></li>
-                <li><a href="#history" class="nav-link">Historique</a></li>
-                <li><a href="#beaches" class="nav-link">Plages</a></li>
-                <li><a href="#economy" class="nav-link">Économique</a></li>
-                <li><a href="#about" class="nav-link">À propos</a></li>
+    <!-- Pages -->
+    <div class="page" id="about-page">
+        <button class="close-page"><i class="fas fa-times"></i></button>
+        <h2>À Propos de GDIZ</h2>
+        <div class="page-content">
+            <p>GDIZ est une marque béninoise d'e-commerce haut de gamme, née de la passion pour l'innovation et l'excellence. Fondée en 2023, notre mission est de redéfinir l'expérience d'achat en ligne en Afrique de l'Ouest.</p>
+            <p>Basée à Cotonou, au cœur de la zone économique du GDIZ (Glèhouè Distribution International Zone), nous tirons parti de cette position stratégique pour offrir à nos clients des produits de qualité à des prix compétitifs.</p>
+            <p>Notre équipe est composée de jeunes professionnels dynamiques, experts dans leurs domaines respectifs, unis par une vision commune : faire de GDIZ la référence du e-commerce en Afrique francophone.</p>
+            <h3>Nos Valeurs</h3>
+            <ul>
+                <li><strong>Excellence :</strong> Nous nous engageons à offrir le meilleur à nos clients.</li>
+                <li><strong>Innovation :</strong> Nous repoussons constamment les limites du possible.</li>
+                <li><strong>Authenticité :</strong> Nous restons fidèles à nos racines africaines.</li>
+                <li><strong>Service :</strong> La satisfaction client est au cœur de nos préoccupations.</li>
             </ul>
-            
-            <div class="user-actions">
-                <a href="#login" class="btn btn-outline">Connexion</a>
-                <a href="#register" class="btn">Inscription</a>
-                
-                <!-- Icône admin (visible uniquement pour admin) -->
-                <div class="user-info" id="admin-info" style="display: none;">
-                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="Admin">
-                    <span>Admin</span>
-                    <div class="user-dropdown">
-                        <a href="#profile"><i class="fas fa-user"></i> Mon Profil</a>
-                        <a href="#admin"><i class="fas fa-cog"></i> Administration</a>
-                        <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
+            <h3>Notre Engagement</h3>
+            <p>Nous nous engageons à soutenir l'économie locale tout en offrant un accès à des produits internationaux de qualité. 10% de nos bénéfices sont réinvestis dans des initiatives locales pour soutenir l'entrepreneuriat jeune au Bénin.</p>
+        </div>
+    </div>
+
+    <div class="page" id="products-page">
+        <button class="close-page"><i class="fas fa-times"></i></button>
+        <h2>Notre Catalogue</h2>
+        <div class="page-content">
+            <div class="products-grid">
+                <!-- Products will be loaded here dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <div class="page" id="services-page">
+        <button class="close-page"><i class="fas fa-times"></i></button>
+        <h2>Nos Services</h2>
+        <div class="page-content">
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-shipping-fast"></i></div>
+                    <h3>Livraison Rapide</h3>
+                    <p>Livraison express en 24-48h dans tout Cotonou et 3-5 jours ouvrés dans les autres villes du Bénin. Suivi en temps réel de votre commande.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-exchange-alt"></i></div>
+                    <h3>Retours Faciles</h3>
+                    <p>Vous avez 14 jours pour changer d'avis. Retours gratuits et processus simplifié pour votre tranquillité d'esprit.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-lock"></i></div>
+                    <h3>Paiement Sécurisé</h3>
+                    <p>Transactions 100% sécurisées avec cryptage SSL. Paiement à la livraison disponible pour plus de confiance.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-headset"></i></div>
+                    <h3>Support Premium</h3>
+                    <p>Service client disponible 7j/7 via WhatsApp, téléphone et email. Résolution rapide de vos préoccupations.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-gem"></i></div>
+                    <h3>Programme Fidélité</h3>
+                    <p>Gagnez des points à chaque achat et bénéficiez de réductions exclusives, offres spéciales et avant-premières.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-boxes"></i></div>
+                    <h3>Dropshipping Sur Mesure</h3>
+                    <p>Solution clé en main pour entrepreneurs souhaitant lancer leur boutique en ligne sans gestion de stock.</p>
+                </div>
+            </div>
+            <h3>Notre Processus</h3>
+            <p>Chez GDIZ, nous avons optimisé chaque étape de votre expérience d'achat :</p>
+            <ol>
+                <li><strong>Sélection rigoureuse :</strong> Nos acheteurs parcourent le monde pour dénicher les meilleurs produits.</li>
+                <li><strong>Contrôle qualité :</strong> Chaque article est inspecté avant expédition.</li>
+                <li><strong>Emballage premium :</strong> Vos produits sont protégés avec des matériaux haut de gamme.</li>
+                <li><strong>Livraison suivie :</strong> Partenariats avec les meilleurs transporteurs locaux.</li>
+                <li><strong>Service après-vente :</strong> Nous restons disponibles même après réception.</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="page" id="blog-page">
+        <button class="close-page"><i class="fas fa-times"></i></button>
+        <h2>Blog & Actualités</h2>
+        <div class="page-content">
+            <div class="blog-grid">
+                <div class="blog-card">
+                    <div class="blog-image">
+                        <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="E-commerce en Afrique">
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-date">15 Juin 2023</div>
+                        <h3 class="blog-title">L'essor du e-commerce en Afrique de l'Ouest</h3>
+                        <p class="blog-excerpt">Analyse des tendances du marché et opportunités pour les entrepreneurs locaux dans le secteur du commerce électronique.</p>
+                        <a href="#" class="read-more">Lire plus <i class="fas fa-arrow-right"></i></a>
                     </div>
                 </div>
-                
-                <!-- Icône utilisateur standard (visible pour tous les utilisateurs connectés) -->
-                <div class="user-info" id="user-info" style="display: none;">
-                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="User">
-                    <span>Utilisateur</span>
-                    <div class="user-dropdown">
-                        <a href="#profile"><i class="fas fa-user"></i> Mon Profil</a>
-                        <a href="#" id="user-logout-btn"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
+                <div class="blog-card">
+                    <div class="blog-image">
+                        <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80" alt="Tendances mode">
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-date">28 Mai 2023</div>
+                        <h3 class="blog-title">Les tendances mode 2023 au Bénin</h3>
+                        <p class="blog-excerpt">Découvrez les styles qui dominent cette année et comment les intégrer à votre garde-robe pour un look résolument moderne.</p>
+                        <a href="#" class="read-more">Lire plus <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="blog-card">
+                    <div class="blog-image">
+                        <img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Déco intérieure">
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-date">10 Mai 2023</div>
+                        <h3 class="blog-title">Déco intérieure : mélanger tradition et modernité</h3>
+                        <p class="blog-excerpt">Comment créer un intérieur élégant qui marie harmonieusement éléments traditionnels africains et design contemporain.</p>
+                        <a href="#" class="read-more">Lire plus <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="blog-card">
+                    <div class="blog-image">
+                        <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Gadgets tech">
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-date">22 Avril 2023</div>
+                        <h3 class="blog-title">Les gadgets tech indispensables en 2023</h3>
+                        <p class="blog-excerpt">Notre sélection des appareils électroniques et accessoires high-tech qui vont booster votre productivité au quotidien.</p>
+                        <a href="#" class="read-more">Lire plus <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="blog-card">
+                    <div class="blog-image">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Entrepreneuriat">
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-date">5 Avril 2023</div>
+                        <h3 class="blog-title">Lancer son business en ligne avec le dropshipping</h3>
+                        <p class="blog-excerpt">Guide pratique pour démarrer votre activité e-commerce sans investissement initial en stock avec notre programme partenaire.</p>
+                        <a href="#" class="read-more">Lire plus <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="blog-card">
+                    <div class="blog-image">
+                        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" alt="Équipe GDIZ">
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-date">18 Mars 2023</div>
+                        <h3 class="blog-title">Rencontrez l'équipe GDIZ</h3>
+                        <p class="blog-excerpt">Portraits des membres passionnés qui travaillent chaque jour pour vous offrir la meilleure expérience d'achat en ligne.</p>
+                        <a href="#" class="read-more">Lire plus <i class="fas fa-arrow-right"></i></a>
                     </div>
                 </div>
             </div>
+            <h3>Abonnez-vous à notre newsletter</h3>
+            <p>Recevez chaque semaine nos conseils, nouveautés et offres exclusives directement dans votre boîte mail.</p>
+            <form class="newsletter-form">
+                <input type="email" class="newsletter-input" placeholder="Votre email" required>
+                <button type="submit" class="newsletter-btn">S'abonner</button>
+            </form>
         </div>
-    </nav>
+    </div>
 
-    <!-- Sections -->
-    <section id="home" class="active">
-        <div class="container">
-            <div class="home-content">
-                <h1>Découvrez le Bénin comme jamais auparavant</h1>
-                <p>Monarke vous invite à explorer les trésors cachés, la culture vibrante et les paysages époustouflants du Bénin. Une expérience touristique authentique et inoubliable.</p>
-                <a href="#destinations" class="btn">Commencer l'aventure</a>
+    <div class="page" id="contact-page">
+        <button class="close-page"><i class="fas fa-times"></i></button>
+        <h2>Contactez GDIZ</h2>
+        <div class="page-content">
+            <div class="contact-container">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <div class="contact-text">
+                            <h3>Adresse</h3>
+                            <p>Zone Industrielle GDIZ, Lot 45<br>Cotonou, Bénin</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fas fa-phone-alt"></i></div>
+                        <div class="contact-text">
+                            <h3>Téléphone</h3>
+                            <p><a href="tel:+22961000000">+229 61 00 00 00</a><br><a href="tel:+22997000000">+229 97 00 00 00</a></p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                        <div class="contact-text">
+                            <h3>Email</h3>
+                            <p><a href="mailto:contact@gdiz.bj">contact@gdiz.bj</a><br><a href="mailto:serviceclient@gdiz.bj">serviceclient@gdiz.bj</a></p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fas fa-clock"></i></div>
+                        <div class="contact-text">
+                            <h3>Heures d'ouverture</h3>
+                            <p>Lundi - Vendredi : 8h - 18h<br>Samedi : 9h - 14h<br>Dimanche : Fermé</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fas fa-share-alt"></i></div>
+                        <div class="contact-text">
+                            <h3>Réseaux sociaux</h3>
+                            <div class="footer-social">
+                                <a href="#"><i class="fab fa-instagram"></i></a>
+                                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fab fa-tiktok"></i></a>
+                                <a href="#"><i class="fab fa-whatsapp"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Nom complet</label>
+                            <input type="text" id="name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Téléphone</label>
+                            <input type="tel" id="phone" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Sujet</label>
+                            <select id="subject" class="form-control" required>
+                                <option value="">Sélectionnez un sujet</option>
+                                <option value="question">Question sur un produit</option>
+                                <option value="order">Suivi de commande</option>
+                                <option value="return">Retour/Réclamation</option>
+                                <option value="partnership">Partenariat commercial</option>
+                                <option value="other">Autre</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" class="form-control" required></textarea>
+                        </div>
+                        <button type="submit" class="btn">Envoyer le message</button>
+                    </form>
+                </div>
+            </div>
+            <div class="map-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.013383693318!2d2.4201103157694105!3d6.355932595428249!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x10235545d6a3f9f9%3A0x4e4e1a5a5d5d5d5d!2sGDIZ%2C%20Cotonou!5e0!3m2!1sfr!2sbj!4v1620000000000!5m2!1sfr!2sbj" allowfullscreen="" loading="lazy"></iframe>
             </div>
         </div>
-    </section>
+    </div>
 
-    <section id="destinations">
-        <div class="container">
-            <h2>Nos Destinations</h2>
-            <div class="card-grid">
-                <div class="card destination-card">
-                    <div class="card-image">
-                        <img src="https://images.unsplash.com/photo-1602006131677-9d3d3a9f7e3c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Cotonou">
+    <!-- Product Detail Page -->
+    <div class="page" id="product-detail-page">
+        <button class="close-page"><i class="fas fa-times"></i></button>
+        <div class="page-content">
+            <div class="product-page">
+                <div class="product-gallery">
+                    <div class="main-image">
+                        <img id="main-product-image" src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1364&q=80" alt="Produit">
                     </div>
-                    <div class="card-content">
-                        <h3>Cotonou</h3>
-                        <p>La capitale économique du Bénin, une ville vibrante avec ses marchés animés, ses plages et sa vie nocturne.</p>
-                        <div class="card-actions">
-                            <a href="#hotels?city=Cotonou" class="btn">Voir les hôtels</a>
-                            <a href="#restaurants?city=Cotonou" class="btn btn-outline">Voir les restaurants</a>
+                    <div class="thumbnail-grid">
+                        <div class="thumbnail active">
+                            <img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1364&q=80" alt="Produit 1">
+                        </div>
+                        <div class="thumbnail">
+                            <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1399&q=80" alt="Produit 2">
+                        </div>
+                        <div class="thumbnail">
+                            <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Produit 3">
+                        </div>
+                        <div class="thumbnail">
+                            <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Produit 4">
                         </div>
                     </div>
                 </div>
-                <div class="card destination-card">
-                    <div class="card-image">
-                        <img src="https://images.unsplash.com/photo-1614541085974-1a1d3e0b8a4c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Ouidah">
-                    </div>
-                    <div class="card-content">
-                        <h3>Ouidah</h3>
-                        <p>Le berceau du Vodoun au Bénin, célèbre pour sa Route des Esclaves et ses festivals culturels.</p>
-                        <div class="card-actions">
-                            <a href="#hotels?city=Ouidah" class="btn">Voir les hôtels</a>
-                            <a href="#restaurants?city=Ouidah" class="btn btn-outline">Voir les restaurants</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="card destination-card">
-                    <div class="card-image">
-                        <img src="https://images.unsplash.com/photo-1543429776-2782fc586c7a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=900&q=80" alt="Ganvié">
-                    </div>
-                    <div class="card-content">
-                        <h3>Ganvié</h3>
-                        <p>La "Venise de l'Afrique", un village lacustre unique construit sur pilotis au milieu du lac Nokoué.</p>
-                        <div class="card-actions">
-                            <a href="#hotels?city=Ganvie" class="btn">Voir les hôtels</a>
-                            <a href="#restaurants?city=Ganvie" class="btn btn-outline">Voir les restaurants</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="hotels">
-        <div class="container">
-            <h2>Nos Hôtels</h2>
-            <div class="card-grid">
-                <div class="card hotel-card">
-                    <div class="card-image">
-                        <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Hôtel du Lac">
-                    </div>
-                    <div class="card-content">
-                        <h3>Hôtel du Lac</h3>
-                        <div class="hotel-rating">
+                <div class="product-details">
+                    <h1>Montre Connectée Premium X9</h1>
+                    <div class="product-price">75,000 XOF</div>
+                    <div class="product-rating">
+                        <div class="product-rating-stars">
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star-half-alt"></i>
-                            (4.5)
                         </div>
-                        <p class="hotel-location">Cotonou, Bénin</p>
-                        <p class="hotel-description">Situé au bord de la lagune, cet hôtel offre une vue imprenable et un service exceptionnel.</p>
-                        <div class="hotel-amenities">
-                            <span class="amenity">Wi-Fi gratuit</span>
-                            <span class="amenity">Piscine</span>
-                            <span class="amenity">Petit-déjeuner inclus</span>
-                            <span class="amenity">Parking</span>
-                        </div>
-                        <div class="hotel-price">25 000 FCFA/nuit</div>
-                        <a href="#booking?type=hotel&id=1" class="btn">Réserver maintenant</a>
+                        <div class="product-rating-count">(42 avis)</div>
                     </div>
-                </div>
-                <div class="card hotel-card">
-                    <div class="card-image">
-                        <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Palais Royal">
+                    <div class="product-description">
+                        <p>La Montre Connectée Premium X9 allie élégance et technologie de pointe. Avec son écran AMOLED haute résolution, son suivi d'activité précis et son autonomie de 7 jours, c'est le compagnon idéal pour votre vie active.</p>
+                        <p>Compatible avec iOS et Android, cette montre vous permet de recevoir des notifications, de suivre votre sommeil, de monitorer votre fréquence cardiaque et bien plus encore, le tout dans un design élégant et résistant à l'eau.</p>
                     </div>
-                    <div class="card-content">
-                        <h3>Palais Royal</h3>
-                        <div class="hotel-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="far fa-star"></i>
-                            (4.0)
+                    <div class="product-options">
+                        <div class="option-group">
+                            <span class="option-title">Couleur :</span>
+                            <div class="option-values">
+                                <div class="option-value active">Noir</div>
+                                <div class="option-value">Argent</div>
+                                <div class="option-value">Or Rose</div>
+                            </div>
                         </div>
-                        <p class="hotel-location">Cotonou, Bénin</p>
-                        <p class="hotel-description">Un établissement luxueux au cœur de Cotonou, avec spa et restaurant gastronomique.</p>
-                        <div class="hotel-amenities">
-                            <span class="amenity">Spa</span>
-                            <span class="amenity">Restaurant</span>
-                            <span class="amenity">Salle de sport</span>
-                            <span class="amenity">Service de chambre</span>
+                        <div class="option-group">
+                            <span class="option-title">Taille :</span>
+                            <div class="option-values">
+                                <div class="option-value active">40mm</div>
+                                <div class="option-value">44mm</div>
+                            </div>
                         </div>
-                        <div class="hotel-price">35 000 FCFA/nuit</div>
-                        <a href="#booking?type=hotel&id=2" class="btn">Réserver maintenant</a>
                     </div>
-                </div>
-                <div class="card hotel-card">
-                    <div class="card-image">
-                        <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="La Maison du Voyageur">
+                    <div class="quantity-selector">
+                        <button class="quantity-btn-lg minus">-</button>
+                        <div class="quantity-value-lg">1</div>
+                        <button class="quantity-btn-lg plus">+</button>
                     </div>
-                    <div class="card-content">
-                        <h3>La Maison du Voyageur</h3>
-                        <div class="hotel-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            (4.9)
+                    <div class="product-actions-lg">
+                        <button class="btn add-to-cart-lg">Ajouter au panier</button>
+                        <button class="wishlist-lg"><i class="far fa-heart"></i></button>
+                    </div>
+                    <div class="product-meta">
+                        <div class="meta-item">
+                            <span class="meta-title">Catégorie :</span>
+                            <span>Technologie, Accessoires</span>
                         </div>
-                        <p class="hotel-location">Cotonou, Bénin</p>
-                        <p class="hotel-description">Une expérience authentique avec des chambres confortables et une ambiance chaleureuse.</p>
-                        <div class="hotel-amenities">
-                            <span class="amenity">Terrasse</span>
-                            <span class="amenity">Bar</span>
-                            <span class="amenity">Wi-Fi gratuit</span>
-                            <span class="amenity">Climatisation</span>
+                        <div class="meta-item">
+                            <span class="meta-title">Disponibilité :</span>
+                            <span style="color: green;">En stock (15 unités)</span>
                         </div>
-                        <div class="hotel-price">18 000 FCFA/nuit</div>
-                        <a href="#booking?type=hotel&id=3" class="btn">Réserver maintenant</a>
+                        <div class="meta-item">
+                            <span class="meta-title">Livraison :</span>
+                            <span>2-3 jours ouvrés</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
-    <section id="restaurants">
-        <div class="container">
-            <h2>Nos Restaurants</h2>
-            <div class="card-grid">
-                <div class="card restaurant-card">
-                    <div class="card-image">
-                        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Le Gourmet Béninois">
-                    </div>
-                    <div class="card-content">
-                        <h3>Le Gourmet Béninois</h3>
-                        <p class="restaurant-location">Cotonou, Bénin</p>
-                        <div class="restaurant-cuisine">Cuisine locale • Gastronomique</div>
-                        <div class="restaurant-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                            (4.7)
-                        </div>
-                        <p class="restaurant-description">Découvrez les saveurs authentiques du Bénin dans un cadre élégant et moderne.</p>
-                        <a href="#booking?type=restaurant&id=1" class="btn">Réserver une table</a>
-                    </div>
+    <!-- Cart Modal -->
+    <div class="cart-overlay"></div>
+    <div class="cart-modal">
+        <div class="cart-header">
+            <h3 class="cart-title">Votre Panier</h3>
+            <button class="close-cart"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="cart-items">
+            <!-- Cart items will be loaded here dynamically -->
+            <div class="empty-cart-message">
+                <p>Votre panier est vide</p>
+                <a href="#" class="btn btn-outline">Parcourir la boutique</a>
+            </div>
+        </div>
+        <div class="cart-total">
+            <span>Total :</span>
+            <span class="total-amount">0 XOF</span>
+        </div>
+        <div class="cart-actions">
+            <button class="btn btn-dark">Passer la commande</button>
+            <button class="btn btn-outline">Continuer les achats</button>
+        </div>
+    </div>
+
+    <!-- Profile Modal -->
+    <div class="profile-modal">
+        <div class="profile-header">
+            <h3 class="profile-title">Mon Profil</h3>
+            <button class="close-profile"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="profile-content">
+            <div class="profile-info">
+                <div class="profile-avatar">
+                    <i class="fas fa-user"></i>
                 </div>
-                <div class="card restaurant-card">
-                    <div class="card-image">
-                        <img src="https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="La Lagune">
-                    </div>
-                    <div class="card-content">
-                        <h3>La Lagune</h3>
-                        <p class="restaurant-location">Cotonou, Bénin</p>
-                        <div class="restaurant-cuisine">Fruits de mer • Vue sur mer</div>
-                        <div class="restaurant-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="far fa-star"></i>
-                            (4.2)
-                        </div>
-                        <p class="restaurant-description">Spécialités de poissons et fruits de mer frais avec vue panoramique sur l'océan.</p>
-                        <a href="#booking?type=restaurant&id=2" class="btn">Réserver une table</a>
-                    </div>
+                <h4 class="profile-name">Invité</h4>
+                <p class="profile-email">invité@gdiz.bj</p>
+            </div>
+            <div class="profile-actions">
+                <button class="profile-btn"><i class="fas fa-user"></i> Mon Compte</button>
+                <button class="profile-btn"><i class="fas fa-shopping-bag"></i> Mes Commandes</button>
+                <button class="profile-btn"><i class="fas fa-heart"></i> Ma Liste de Souhaits</button>
+                <button class="profile-btn"><i class="fas fa-map-marker-alt"></i> Mes Adresses</button>
+                <button class="profile-btn outline"><i class="fas fa-sign-in-alt"></i> Se Connecter</button>
+                <button class="profile-btn outline"><i class="fas fa-user-plus"></i> Créer un Compte</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <header>
+        <div class="header-container">
+            <a href="#" class="logo" id="home-link">
+                <div class="logo-img">G</div>
+                <div class="logo-text">GDIZ<span>STORE</span></div>
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="#" class="nav-link" data-page="about-page">À Propos</a></li>
+                    <li><a href="#" class="nav-link" data-page="products-page">Produits</a></li>
+                    <li><a href="#" class="nav-link" data-page="services-page">Services</a></li>
+                    <li><a href="#" class="nav-link" data-page="blog-page">Blog</a></li>
+                    <li><a href="#" class="nav-link" data-page="contact-page">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <button class="theme-toggle"><i class="fas fa-moon"></i></button>
+                <button class="profile-btn"><i class="fas fa-user"></i></button>
+                <div class="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
                 </div>
-                <div class="card restaurant-card">
-                    <div class="card-image">
-                        <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Savane Grill">
+                <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section id="hero" class="active">
+            <div class="hero-content">
+                <h1>GDIZ STORE</h1>
+                <p class="hero-slogan">L'EXCELLENCE URBAINE, REDÉFINIE</p>
+                <a href="#" class="btn" data-page="products-page">Découvrir</a>
+            </div>
+            <a href="#about" class="hero-scroll">
+                <i class="fas fa-chevron-down"></i>
+            </a>
+        </section>
+
+        <section id="about">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Notre Histoire</h2>
+                    <p>GDIZ Store incarne l'élégance urbaine et l'innovation africaine</p>
+                </div>
+                <div class="about-content">
+                    <div class="about-text">
+                        <p>Née dans le dynamique quartier économique de Glèhouè à Cotonou, GDIZ Store est bien plus qu'une simple plateforme e-commerce. Nous sommes une vitrine de l'excellence béninoise, un pont entre les créateurs locaux et un marché global.</p>
+                        <p>Notre curation de produits allie savoir-faire artisanal et design contemporain, offrant une expérience d'achat unique où chaque article raconte une histoire, celle d'une Afrique moderne et ambitieuse.</p>
+                        <p>Le nom GDIZ fait référence à la Glèhouè Distribution International Zone, symbole de notre engagement à positionner le Bénin comme hub commercial régional. Notre logo, un phare stylisé, représente notre mission : éclairer le chemin vers un commerce africain innovant et connecté.</p>
+                        <a href="#" class="btn btn-outline" data-page="about-page">En savoir plus</a>
                     </div>
-                    <div class="card-content">
-                        <h3>Savane Grill</h3>
-                        <p class="restaurant-location">Cotonou, Bénin</p>
-                        <div class="restaurant-cuisine">Viandes grillées • Cuisine africaine</div>
-                        <div class="restaurant-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            (4.9)
-                        </div>
-                        <p class="restaurant-description">Spécialiste des viandes grillées au feu de bois dans une ambiance conviviale.</p>
-                        <a href="#booking?type=restaurant&id=3" class="btn">Réserver une table</a>
+                    <div class="about-image">
+                        <img src="https://images.unsplash.com/photo-1566438480900-0609be27a4be?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2094&q=80" alt="Cotonou by night">
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Les autres sections ont été adaptées de manière similaire -->
-    <!-- Pour des raisons de longueur, je n'ai inclus que les sections principales -->
+        <section id="products">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Nos Collections</h2>
+                    <p>Découvrez notre sélection exclusive de produits béninois haut de gamme</p>
+                </div>
+                <div class="products-grid">
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://images.unsplash.com/photo-1594035910387-fea47794261f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1480&q=80" alt="Tissu africain">
+                            <span class="product-badge">Nouveau</span>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Tissu Wax GDIZ Premium</h3>
+                            <div class="product-price">25,000 XOF</div>
+                            <div class="product-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span>(36)</span>
+                            </div>
+                            <div class="product-actions">
+                                <button class="add-to-cart">Ajouter</button>
+                                <button class="wishlist"><i class="far fa-heart"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://images.unsplash.com/photo-1601924994987-69e26d50dc26?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Accessoires artisanaux">
+                            <span class="product-badge">Meilleur vente</span>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Bijoux Artisanaux en Bronze</h3>
+                            <div class="product-price">45,000 XOF</div>
+                            <div class="product-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span>(128)</span>
+                            </div>
+                            <div class="product-actions">
+                                <button class="add-to-cart">Ajouter</button>
+                                <button class="wishlist"><i class="far fa-heart"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://images.unsplash.com/photo-1595341595379-cf1cd0fb7fb3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" alt="Sacs artisanaux">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Sac en Rafia Traditionnel</h3>
+                            <div class="product-price">35,000 XOF</div>
+                            <div class="product-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <span>(42)</span>
+                            </div>
+                            <div class="product-actions">
+                                <button class="add-to-cart">Ajouter</button>
+                                <button class="wishlist"><i class="far fa-heart"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" alt="Vêtements africains">
+                            <span class="product-badge">Promo</span>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Boubou Traditionnel en Coton</h3>
+                            <div class="product-price">55,000 XOF <span class="old-price">75,000 XOF</span></div>
+                            <div class="product-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span>(87)</span>
+                            </div>
+                            <div class="product-actions">
+                                <button class="add-to-cart">Ajouter</button>
+                                <button class="wishlist"><i class="far fa-heart"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://images.unsplash.com/photo-1556228578-8c89e6adf883?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" alt="Statues africaines">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Statue en Bois d'Ébène</h3>
+                            <div class="product-price">85,000 XOF</div>
+                            <div class="product-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <span>(29)</span>
+                            </div>
+                            <div class="product-actions">
+                                <button class="add-to-cart">Ajouter</button>
+                                <button class="wishlist"><i class="far fa-heart"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://images.unsplash.com/photo-1601924994987-69e26d50dc26?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Accessoires">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Collier en Perles Africaines</h3>
+                            <div class="product-price">32,000 XOF</div>
+                            <div class="product-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span>(58)</span>
+                            </div>
+                            <div class="product-actions">
+                                <button class="add-to-cart">Ajouter</button>
+                                <button class="wishlist"><i class="far fa-heart"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 3rem;">
+                    <a href="#" class="btn" data-page="products-page">Voir tout le catalogue</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="services">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Notre Approche</h2>
+                    <p>Une expérience client exceptionnelle à chaque étape</p>
+                </div>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon"><i class="fas fa-shipping-fast"></i></div>
+                        <h3>Livraison Rapide</h3>
+                        <p>Recevez vos commandes en 24-48h à Cotonou et 3-5 jours dans tout le Bénin grâce à notre réseau de partenaires logistiques premium.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon"><i class="fas fa-hand-holding-usd"></i></div>
+                        <h3>Paiements Sécurisés</h3>
+                        <p>Payez en toute sécurité via MTN Mobile Money, Moov Money, cartes bancaires ou PayPal. Cryptage SSL pour toutes les transactions.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon"><i class="fas fa-user-shield"></i></div>
+                        <h3>Authenticité Garantie</h3>
+                        <p>Tous nos produits sont authentiques et vérifiés. Certificats d'authenticité fournis pour les articles de luxe et électroniques.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon"><i class="fas fa-headset"></i></div>
+                        <h3>Support Premium</h3>
+                        <p>Notre équipe dédiée est disponible 7j/7 pour répondre à vos questions via WhatsApp, téléphone ou email.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon"><i class="fas fa-exchange-alt"></i></div>
+                        <h3>Retours Faciles</h3>
+                        <p>Vous avez 14 jours pour retourner un article non satisfaisant. Processus simplifié et prise en charge rapide.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon"><i class="fas fa-gem"></i></div>
+                        <h3>Programme Fidélité</h3>
+                        <p>Gagnez des points à chaque achat et bénéficiez de réductions exclusives, offres spéciales et avant-premières.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="blog">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Actualités & Conseils</h2>
+                    <p>Découvrez les dernières tendances et nos conseils d'experts</p>
+                </div>
+                <div class="blog-grid">
+                    <div class="blog-card">
+                        <div class="blog-image">
+                            <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="E-commerce en Afrique">
+                        </div>
+                        <div class="blog-content">
+                            <div class="blog-date">15 Juin 2023</div>
+                            <h3 class="blog-title">L'essor du e-commerce en Afrique de l'Ouest</h3>
+                            <p class="blog-excerpt">Analyse des tendances du marché et opportunités pour les entrepreneurs locaux dans le secteur du commerce électronique.</p>
+                            <a href="#" class="read-more">Lire plus <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="blog-card">
+                        <div class="blog-image">
+                            <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80" alt="Tendances mode">
+                        </div>
+                        <div class="blog-content">
+                            <div class="blog-date">28 Mai 2023</div>
+                            <h3 class="blog-title">Les tendances mode 2023 au Bénin</h3>
+                            <p class="blog-excerpt">Découvrez les styles qui dominent cette année et comment les intégrer à votre garde-robe pour un look résolument moderne.</p>
+                            <a href="#" class="read-more">Lire plus <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="blog-card">
+                        <div class="blog-image">
+                            <img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Déco intérieure">
+                        </div>
+                        <div class="blog-content">
+                            <div class="blog-date">10 Mai 2023</div>
+                            <h3 class="blog-title">Déco intérieure : mélanger tradition et modernité</h3>
+                            <p class="blog-excerpt">Comment créer un intérieur élégant qui marie harmonieusement éléments traditionnels africains et design contemporain.</p>
+                            <a href="#" class="read-more">Lire plus <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 3rem;">
+                    <a href="#" class="btn btn-outline" data-page="blog-page">Voir tous les articles</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Restons Connectés</h2>
+                    <p>Nous sommes à votre écoute pour toute question ou demande particulière</p>
+                </div>
+                <div class="contact-container">
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                            <div class="contact-text">
+                                <h3>Notre Showroom</h3>
+                                <p>Zone Industrielle GDIZ, Lot 45<br>Cotonou, Bénin</p>
+                                <a href="#" class="btn btn-outline" style="margin-top: 1rem;" data-page="contact-page">Voir sur la carte</a>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon"><i class="fas fa-phone-alt"></i></div>
+                            <div class="contact-text">
+                                <h3>Appelez-nous</h3>
+                                <p><a href="tel:+22961000000">+229 61 00 00 00</a><br><a href="tel:+22997000000">+229 97 00 00 00</a></p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                            <div class="contact-text">
+                                <h3>Envoyez-nous un email</h3>
+                                <p><a href="mailto:contact@gdiz.bj">contact@gdiz.bj</a><br><a href="mailto:serviceclient@gdiz.bj">serviceclient@gdiz.bj</a></p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon"><i class="fas fa-share-alt"></i></div>
+                            <div class="contact-text">
+                                <h3>Suivez-nous</h3>
+                                <div class="footer-social">
+                                    <a href="#"><i class="fab fa-instagram"></i></a>
+                                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                    <a href="#"><i class="fab fa-twitter"></i></a>
+                                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contact-form">
+                        <h3>Envoyez-nous un message</h3>
+                        <form id="mainContactForm">
+                            <div class="form-group">
+                                <label for="main-name">Nom complet</label>
+                                <input type="text" id="main-name" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="main-email">Email</label>
+                                <input type="email" id="main-email" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="main-subject">Sujet</label>
+                                <select id="main-subject" class="form-control" required>
+                                    <option value="">Sélectionnez un sujet</option>
+                                    <option value="question">Question sur un produit</option>
+                                    <option value="order">Suivi de commande</option>
+                                    <option value="return">Retour/Réclamation</option>
+                                    <option value="partnership">Partenariat commercial</option>
+                                    <option value="other">Autre</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="main-message">Message</label>
+                                <textarea id="main-message" class="form-control" required></textarea>
+                            </div>
+                            <button type="submit" class="btn">Envoyer le message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
     <footer>
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">MONARKE</div>
-                <p>Votre guide pour découvrir les merveilles du Bénin</p>
-                <div class="social-links">
-                    <a href="https://facebook.com/monarkebj" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://twitter.com/monarkebj" target="_blank"><i class="fab fa-twitter"></i></a>
-                    <a href="https://instagram.com/monarkebj" target="_blank"><i class="fab fa-instagram"></i></a>
-                    <a href="https://youtube.com/monarkebj" target="_blank"><i class="fab fa-youtube"></i></a>
+            <div class="footer-container">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <div class="footer-logo-img">G</div>
+                        <div class="footer-logo-text">GDIZ</div>
+                    </div>
+                    <p>GDIZ Store est la référence béninoise en matière de e-commerce haut de gamme. Nous connectons les consommateurs africains exigeants aux meilleurs produits internationaux.</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
                 </div>
-                <div class="copyright">
-                    &copy; 2025 Monarke Tourism. Tous droits réservés.
+                <div class="footer-links">
+                    <h3>Liens rapides</h3>
+                    <ul>
+                        <li><a href="#" data-page="about-page">À propos de GDIZ</a></li>
+                        <li><a href="#" data-page="products-page">Nos produits</a></li>
+                        <li><a href="#" data-page="services-page">Nos services</a></li>
+                        <li><a href="#" data-page="blog-page">Blog & Actualités</a></li>
+                        <li><a href="#" data-page="contact-page">Contactez-nous</a></li>
+                    </ul>
                 </div>
+                <div class="footer-links">
+                    <h3>Catégories</h3>
+                    <ul>
+                        <li><a href="#">Mode & Accessoires</a></li>
+                        <li><a href="#">Artisanat Local</a></li>
+                        <li><a href="#">Maison & Déco</a></li>
+                        <li><a href="#">Beauté & Soins</a></li>
+                        <li><a href="#">Produits Alimentaires</a></li>
+                    </ul>
+                </div>
+                <div class="footer-newsletter">
+                    <h3>Newsletter</h3>
+                    <p>Abonnez-vous à notre newsletter pour recevoir nos offres exclusives et les dernières tendances.</p>
+                    <form class="newsletter-form">
+                        <input type="email" class="newsletter-input" placeholder="Votre email" required>
+                        <button type="submit" class="newsletter-btn"><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                    <p>Modes de paiement acceptés :</p>
+                    <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
+                        <i class="fab fa-cc-visa" style="font-size: 1.5rem;"></i>
+                        <i class="fab fa-cc-mastercard" style="font-size: 1.5rem;"></i>
+                        <i class="fas fa-mobile-alt" style="font-size: 1.5rem;"></i>
+                        <i class="fab fa-cc-paypal" style="font-size: 1.5rem;"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 GDIZ Store. Tous droits réservés. | <a href="#">Politique de confidentialité</a> | <a href="#">Conditions générales</a></p>
             </div>
         </div>
     </footer>
 
     <script>
+        // Loading Screen
         document.addEventListener('DOMContentLoaded', function() {
-            const splashScreen = document.getElementById('splash-screen');
-            const mainNav = document.getElementById('main-nav');
-            const sections = document.querySelectorAll('section');
-            const hamburger = document.getElementById('hamburger');
-            const navMenu = document.getElementById('nav-menu');
-            const adminInfo = document.getElementById('admin-info');
-            const userInfo = document.getElementById('user-info');
-            const navLinks = document.querySelectorAll('.nav-link');
-            
-            // Menu hamburger
-            hamburger.addEventListener('click', () => {
-                hamburger.classList.toggle('active');
-                navMenu.classList.toggle('active');
-            });
-            
-            // Fermer le menu quand on clique sur un lien
-            navLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    hamburger.classList.remove('active');
-                    navMenu.classList.remove('active');
-                });
-            });
-            
-            // Simulate splash screen
-            setTimeout(() => {
-                splashScreen.classList.add('fade-out');
-                mainNav.classList.add('active');
-                
-                // Simuler un utilisateur connecté
-                setTimeout(() => {
-                    adminInfo.style.display = 'flex';
+            setTimeout(function() {
+                document.getElementById('loading-page').classList.remove('active');
+                setTimeout(function() {
+                    document.getElementById('loading-page').style.display = 'none';
                 }, 1000);
-            }, 3000);
-            
-            // Navigation
-            navLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    
-                    // Hide all sections
-                    sections.forEach(section => {
-                        section.classList.remove('active');
-                    });
-                    
-                    // Show target section
-                    document.querySelector(targetId).classList.add('active');
-                    
-                    // Scroll to top
-                    window.scrollTo(0, 0);
-                });
-            });
-            
-            // Simuler la navigation pour les autres éléments
-            document.querySelectorAll('.btn, .user-dropdown a').forEach(btn => {
-                btn.addEventListener('click', function(e) {
-                    if (this.getAttribute('href') && this.getAttribute('href').startsWith('#')) {
-                        e.preventDefault();
-                        const targetId = this.getAttribute('href');
-                        
-                        // Hide all sections
-                        sections.forEach(section => {
-                            section.classList.remove('active');
-                        });
-                        
-                        // Show target section
-                        document.querySelector(targetId).classList.add('active');
-                        
-                        // Scroll to top
-                        window.scrollTo(0, 0);
-                    }
-                });
-            });
-            
-            // Logout functionality
-            function logout() {
-                adminInfo.style.display = 'none';
-                userInfo.style.display = 'none';
-                document.querySelectorAll('section').forEach(section => {
-                    section.classList.remove('active');
-                });
-                document.getElementById('home').classList.add('active');
-            }
-            
-            document.getElementById('logout-btn')?.addEventListener('click', logout);
-            document.getElementById('user-logout-btn')?.addEventListener('click', logout);
-            
-            // Booking tabs
-            const bookingTabs = document.querySelectorAll('.booking-tab');
-            const bookingContents = document.querySelectorAll('.booking-content');
-            
-            bookingTabs.forEach(tab => {
-                tab.addEventListener('click', function() {
-                    const tabId = this.getAttribute('data-tab');
-                    
-                    // Remove active class from all tabs
-                    bookingTabs.forEach(t => t.classList.remove('active'));
-                    // Add active class to current tab
-                    this.classList.add('active');
-                    
-                    // Hide all contents
-                    bookingContents.forEach(content => {
-                        content.classList.remove('active');
-                    });
-                    
-                    // Show the selected content
-                    document.getElementById(`${tabId}-booking`).classList.add('active');
-                });
-            });
-            
-            // Admin menu navigation
-            const adminNavLinks = document.querySelectorAll('.admin-nav');
-            const adminPanels = document.querySelectorAll('.admin-content-panel');
-            
-            adminNavLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetPanelId = this.getAttribute('data-target') + '-panel';
-                    
-                    // Remove active class from all links and panels
-                    adminNavLinks.forEach(link => link.classList.remove('active'));
-                    adminPanels.forEach(panel => panel.classList.remove('active'));
-                    
-                    // Add active class to clicked link
-                    this.classList.add('active');
-                    
-                    // Show the target panel
-                    document.getElementById(targetPanelId).classList.add('active');
-                });
+            }, 2000);
+        });
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const nav = document.querySelector('nav ul');
+        
+        mobileMenuBtn.addEventListener('click', function() {
+            nav.classList.toggle('active');
+            this.innerHTML = nav.classList.contains('active') ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+
+        // Close mobile menu when clicking a link
+        const navLinks = document.querySelectorAll('nav a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                if (window.innerWidth <= 768) {
+                    nav.classList.remove('active');
+                    mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                }
             });
         });
+
+        // Theme Toggle
+        const themeToggle = document.querySelector('.theme-toggle');
+        themeToggle.addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+            this.innerHTML = document.body.classList.contains('dark-mode') ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+            
+            // Save preference to localStorage
+            localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+        });
+
+        // Check for saved theme preference
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.body.classList.add('dark-mode');
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+
+        // Page Navigation
+        const pageLinks = document.querySelectorAll('[data-page]');
+        const sections = document.querySelectorAll('section');
+        const homeLink = document.getElementById('home-link');
+        
+        // Function to show a specific section and hide others
+        function showSection(sectionId) {
+            sections.forEach(section => {
+                if (section.id === sectionId) {
+                    section.classList.add('active');
+                } else {
+                    section.classList.remove('active');
+                }
+            });
+        }
+        
+        // Home link click handler
+        homeLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            showSection('hero');
+            window.scrollTo(0, 0);
+        });
+        
+        // Nav links click handlers
+        pageLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const pageId = this.getAttribute('data-page');
+                
+                if (pageId.includes('-page')) {
+                    // Show modal page
+                    document.querySelectorAll('.page').forEach(page => {
+                        page.classList.remove('active');
+                    });
+                    
+                    document.getElementById(pageId).classList.add('active');
+                } else {
+                    // Show section
+                    showSection(pageId.replace('-page', ''));
+                    window.scrollTo(0, 0);
+                }
+            });
+        });
+
+        // Close Page
+        const closeButtons = document.querySelectorAll('.close-page');
+        closeButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                this.closest('.page').classList.remove('active');
+            });
+        });
+
+        // Profile Modal Toggle
+        const profileBtn = document.querySelector('.profile-btn');
+        const profileModal = document.querySelector('.profile-modal');
+        const closeProfile = document.querySelector('.close-profile');
+        
+        profileBtn.addEventListener('click', function() {
+            profileModal.classList.toggle('active');
+            cartModal.classList.remove('active');
+            cartOverlay.classList.toggle('active');
+        });
+        
+        closeProfile.addEventListener('click', function() {
+            profileModal.classList.remove('active');
+            cartOverlay.classList.remove('active');
+        });
+
+        // Cart Functionality
+        const cartIcon = document.querySelector('.cart-icon');
+        const cartModal = document.querySelector('.cart-modal');
+        const cartOverlay = document.querySelector('.cart-overlay');
+        const closeCart = document.querySelector('.close-cart');
+        const addToCartButtons = document.querySelectorAll('.add-to-cart, .add-to-cart-lg');
+        const cartCount = document.querySelector('.cart-count');
+        const cartItemsContainer = document.querySelector('.cart-items');
+        const cartTotal = document.querySelector('.total-amount');
+        
+        let cart = [];
+        
+        // Toggle Cart
+        cartIcon.addEventListener('click', function() {
+            cartModal.classList.toggle('active');
+            profileModal.classList.remove('active');
+            cartOverlay.classList.toggle('active');
+        });
+        
+        cartOverlay.addEventListener('click', function() {
+            cartModal.classList.remove('active');
+            profileModal.classList.remove('active');
+            this.classList.remove('active');
+        });
+        
+        closeCart.addEventListener('click', function() {
+            cartModal.classList.remove('active');
+            cartOverlay.classList.remove('active');
+        });
+        
+        // Add to Cart
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const productCard = this.closest('.product-card, .product-details');
+                const product = {
+                    id: Math.random().toString(36).substr(2, 9),
+                    name: productCard.querySelector('.product-title').textContent,
+                    price: parseFloat(productCard.querySelector('.product-price').textContent.replace(/\D/g, '')),
+                    image: productCard.querySelector('.product-image img, .main-image img').src,
+                    quantity: productCard.querySelector('.quantity-value, .quantity-value-lg') ? parseInt(productCard.querySelector('.quantity-value, .quantity-value-lg').textContent) : 1
+                };
+                
+                // Check if product already in cart
+                const existingItem = cart.find(item => item.name === product.name);
+                
+                if (existingItem) {
+                    existingItem.quantity += product.quantity;
+                } else {
+                    cart.push(product);
+                }
+                
+                updateCart();
+                showAddToCartFeedback();
+            });
+        });
+        
+        function updateCart() {
+            // Update cart count
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            
+            // Save to localStorage
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+        
+        function renderCartItems() {
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = `
+                    <div class="empty-cart-message">
+                        <p>Votre panier est vide</p>
+                        <a href="#" class="btn btn-outline">Parcourir la boutique</a>
+                    </div>
+                `;
+                cartTotal.textContent = '0 XOF';
+                return;
+            }
+            
+            let html = '';
+            let total = 0;
+            
+            cart.forEach(item => {
+                total += item.price * item.quantity;
+                
+                html += `
+                    <div class="cart-item">
+                        <div class="cart-item-img">
+                            <img src="${item.image}" alt="${item.name}">
+                        </div>
+                        <div class="cart-item-details">
+                            <h4 class="cart-item-title">${item.name}</h4>
+                            <div class="cart-item-price">${item.price.toLocaleString()} XOF</div>
+                            <div class="cart-item-quantity">
+                                <button class="quantity-btn minus" data-id="${item.id}">-</button>
+                                <span class="quantity-value">${item.quantity}</span>
+                                <button class="quantity-btn plus" data-id="${item.id}">+</button>
+                            </div>
+                        </div>
+                        <button class="remove-item" data-id="${item.id}"><i class="fas fa-trash"></i></button>
+                    </div>
+                `;
+            });
+            
+            cartItemsContainer.innerHTML = html;
+            cartTotal.textContent = `${total.toLocaleString()} XOF`;
+            
+            // Add event listeners to quantity buttons
+            document.querySelectorAll('.quantity-btn.minus').forEach(button => {
+                button.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    const item = cart.find(item => item.id === id);
+                    
+                    if (item.quantity > 1) {
+                        item.quantity--;
+                    } else {
+                        cart = cart.filter(item => item.id !== id);
+                    }
+                    
+                    updateCart();
+                    renderCartItems();
+                });
+            });
+            
+            document.querySelectorAll('.quantity-btn.plus').forEach(button => {
+                button.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    const item = cart.find(item => item.id === id);
+                    item.quantity++;
+                    
+                    updateCart();
+                    renderCartItems();
+                });
+            });
+            
+            // Add event listeners to remove buttons
+            document.querySelectorAll('.remove-item').forEach(button => {
+                button.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    cart = cart.filter(item => item.id !== id);
+                    
+                    updateCart();
+                    renderCartItems();
+                });
+            });
+        }
+        
+        function showAddToCartFeedback() {
+            const feedback = document.createElement('div');
+            feedback.style.position = 'fixed';
+            feedback.style.bottom = '20px';
+            feedback.style.right = '20px';
+            feedback.style.backgroundColor = 'var(--primary)';
+            feedback.style.color = 'white';
+            feedback.style.padding = '1rem 2rem';
+            feedback.style.borderRadius = '5px';
+            feedback.style.boxShadow = '0 5px 15px rgba(0,0,0,0.2)';
+            feedback.style.zIndex = '1000';
+            feedback.style.transform = 'translateY(100px)';
+            feedback.style.opacity = '0';
+            feedback.style.transition = 'all 0.3s ease';
+            feedback.textContent = 'Produit ajouté au panier !';
+            
+            document.body.appendChild(feedback);
+            
+            setTimeout(() => {
+                feedback.style.transform = 'translateY(0)';
+                feedback.style.opacity = '1';
+            }, 10);
+            
+            setTimeout(() => {
+                feedback.style.transform = 'translateY(100px)';
+                feedback.style.opacity = '0';
+                setTimeout(() => {
+                    feedback.remove();
+                }, 300);
+            }, 3000);
+        }
+        
+        // Load cart from localStorage
+        if (localStorage.getItem('cart')) {
+            cart = JSON.parse(localStorage.getItem('cart'));
+            updateCart();
+        }
+        
+        // Product Thumbnail Gallery
+        const thumbnails = document.querySelectorAll('.thumbnail');
+        const mainImage = document.getElementById('main-product-image');
+        
+        thumbnails.forEach(thumbnail => {
+            thumbnail.addEventListener('click', function() {
+                // Remove active class from all thumbnails
+                thumbnails.forEach(t => t.classList.remove('active'));
+                
+                // Add active class to clicked thumbnail
+                this.classList.add('active');
+                
+                // Change main image
+                mainImage.src = this.querySelector('img').src;
+            });
+        });
+        
+        // Quantity Selectors
+        const quantityMinusButtons = document.querySelectorAll('.quantity-btn-lg.minus');
+        const quantityPlusButtons = document.querySelectorAll('.quantity-btn-lg.plus');
+        const quantityValue = document.querySelector('.quantity-value-lg');
+        
+        quantityMinusButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                let value = parseInt(quantityValue.textContent);
+                if (value > 1) {
+                    quantityValue.textContent = value - 1;
+                }
+            });
+        });
+        
+        quantityPlusButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                let value = parseInt(quantityValue.textContent);
+                quantityValue.textContent = value + 1;
+            });
+        });
+        
+        // Wishlist Toggle
+        const wishlistButtons = document.querySelectorAll('.wishlist, .wishlist-lg');
+        
+        wishlistButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                this.classList.toggle('active');
+                this.querySelector('i').classList.toggle('far');
+                this.querySelector('i').classList.toggle('fas');
+                
+                if (this.classList.contains('active')) {
+                    showWishlistFeedback();
+                }
+            });
+        });
+        
+        function showWishlistFeedback() {
+            const feedback = document.createElement('div');
+            feedback.style.position = 'fixed';
+            feedback.style.bottom = '20px';
+            feedback.style.right = '20px';
+            feedback.style.backgroundColor = '#FF4081';
+            feedback.style.color = 'white';
+            feedback.style.padding = '1rem 2rem';
+            feedback.style.borderRadius = '5px';
+            feedback.style.boxShadow = '0 5px 15px rgba(0,0,0,0.2)';
+            feedback.style.zIndex = '1000';
+            feedback.style.transform = 'translateY(100px)';
+            feedback.style.opacity = '0';
+            feedback.style.transition = 'all 0.3s ease';
+            feedback.textContent = 'Ajouté à votre liste de souhaits !';
+            
+            document.body.appendChild(feedback);
+            
+            setTimeout(() => {
+                feedback.style.transform = 'translateY(0)';
+                feedback.style.opacity = '1';
+            }, 10);
+            
+            setTimeout(() => {
+                feedback.style.transform = 'translateY(100px)';
+                feedback.style.opacity = '0';
+                setTimeout(() => {
+                    feedback.remove();
+                }, 300);
+            }, 3000);
+        }
+        
+        // Load Products Page
+        function loadProductsPage() {
+            const productsGrid = document.querySelector('#products-page .products-grid');
+            
+            // Simulate loading
+            productsGrid.innerHTML = '<div style="text-align: center; padding: 2rem;"><div class="spinner"></div></div>';
+            
+            // Simulate API call delay
+            setTimeout(() => {
+                // This would normally come from an API
+                const products = [
+                    {
+                        id: 1,
+                        name: "Tissu Wax GDIZ Premium",
+                        price: 25000,
+                        image: "https://images.unsplash.com/photo-1594035910387-fea47794261f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1480&q=80",
+                        rating: 4,
+                        reviews: 36,
+                        badge: "Nouveau"
+                    },
+                    {
+                        id: 2,
+                        name: "Bijoux Artisanaux en Bronze",
+                        price: 45000,
+                        image: "https://images.unsplash.com/photo-1601924994987-69e26d50dc26?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+                        rating: 5,
+                        reviews: 128,
+                        badge: "Meilleur vente"
+                    },
+                    {
+                        id: 3,
+                        name: "Sac en Rafia Traditionnel",
+                        price: 35000,
+                        image: "https://images.unsplash.com/photo-1595341595379-cf1cd0fb7fb3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80",
+                        rating: 4,
+                        reviews: 42,
+                        badge: ""
+                    },
+                    {
+                        id: 4,
+                        name: "Boubou Traditionnel en Coton",
+                        price: 55000,
+                        image: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80",
+                        rating: 4.5,
+                        reviews: 87,
+                        badge: "Promo"
+                    },
+                    {
+                        id: 5,
+                        name: "Statue en Bois d'Ébène",
+                        price: 85000,
+                        image: "https://images.unsplash.com/photo-1556228578-8c89e6adf883?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80",
+                        rating: 4,
+                        reviews: 29,
+                        badge: ""
+                    },
+                    {
+                        id: 6,
+                        name: "Collier en Perles Africaines",
+                        price: 32000,
+                        image: "https://images.unsplash.com/photo-1601924994987-69e26d50dc26?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+                        rating: 5,
+                        reviews: 58,
+                        badge: ""
+                    },
+                    {
+                        id: 7,
+                        name: "Coussins en Tissu Africain",
+                        price: 28000,
+                        image: "https://images.unsplash.com/photo-1579630942071-35dc75e4da9e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1473&q=80",
+                        rating: 4,
+                        reviews: 22,
+                        badge: "Nouveau"
+                    },
+                    {
+                        id: 8,
+                        name: "Plateau en Bois d'Ébène",
+                        price: 45000,
+                        image: "https://images.unsplash.com/photo-1601871925712-6c1aee0a97a0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+                        rating: 5,
+                        reviews: 48,
+                        badge: ""
+                    }
+                ];
+                
+                let html = '';
+                
+                products.forEach(product => {
+                    let stars = '';
+                    for (let i = 1; i <= 5; i++) {
+                        if (i <= product.rating) {
+                            stars += '<i class="fas fa-star"></i>';
+                        } else if (i - 0.5 <= product.rating) {
+                            stars += '<i class="fas fa-star-half-alt"></i>';
+                        } else {
+                            stars += '<i class="far fa-star"></i>';
+                        }
+                    }
+                    
+                    html += `
+                        <div class="product-card">
+                            <div class="product-image">
+                                <img src="${product.image}" alt="${product.name}">
+                                ${product.badge ? `<span class="product-badge">${product.badge}</span>` : ''}
+                            </div>
+                            <div class="product-info">
+                                <h3 class="product-title">${product.name}</h3>
+                                <div class="product-price">${product.price.toLocaleString()} XOF</div>
+                                <div class="product-rating">
+                                    ${stars}
+                                    <span>(${product.reviews})</span>
+                                </div>
+                                <div class="product-actions">
+                                    <button class="add-to-cart">Ajouter</button>
+                                    <button class="wishlist"><i class="far fa-heart"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                productsGrid.innerHTML = html;
+                
+                // Add event listeners to new add to cart buttons
+                document.querySelectorAll('#products-page .add-to-cart').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const productCard = this.closest('.product-card');
+                        const productName = productCard.querySelector('.product-title').textContent;
+                        const productPrice = parseFloat(productCard.querySelector('.product-price').textContent.replace(/\D/g, ''));
+                        const productImage = productCard.querySelector('.product-image img').src;
+                        
+                        const product = {
+                            id: Math.random().toString(36).substr(2, 9),
+                            name: productName,
+                            price: productPrice,
+                            image: productImage,
+                            quantity: 1
+                        };
+                        
+                        // Check if product already in cart
+                        const existingItem = cart.find(item => item.name === product.name);
+                        
+                        if (existingItem) {
+                            existingItem.quantity += 1;
+                        } else {
+                            cart.push(product);
+                        }
+                        
+                        updateCart();
+                        showAddToCartFeedback();
+                    });
+                });
+                
+                // Add event listeners to new wishlist buttons
+                document.querySelectorAll('#products-page .wishlist').forEach(button => {
+                    button.addEventListener('click', function() {
+                        this.classList.toggle('active');
+                        this.querySelector('i').classList.toggle('far');
+                        this.querySelector('i').classList.toggle('fas');
+                        
+                        if (this.classList.contains('active')) {
+                            showWishlistFeedback();
+                        }
+                    });
+                });
+            }, 1000);
+        }
+        
+        // Form Submission
+        const contactForms = document.querySelectorAll('form');
+        
+        contactForms.forEach(form => {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Simulate form submission
+                const submitBtn = this.querySelector('button[type="submit"]');
+                const originalText = submitBtn.textContent;
+                
+                submitBtn.innerHTML = '<div class="spinner" style="width: 20px; height: 20px; border-width: 2px;"></div>';
+                submitBtn.disabled = true;
+                
+                setTimeout(() => {
+                    submitBtn.textContent = 'Envoyé !';
+                    
+                    setTimeout(() => {
+                        submitBtn.textContent = originalText;
+                        submitBtn.disabled = false;
+                        this.reset();
+                        
+                        // Show success message
+                        const feedback = document.createElement('div');
+                        feedback.style.position = 'fixed';
+                        feedback.style.bottom = '20px';
+                        feedback.style.right = '20px';
+                        feedback.style.backgroundColor = 'green';
+                        feedback.style.color = 'white';
+                        feedback.style.padding = '1rem 2rem';
+                        feedback.style.borderRadius = '5px';
+                        feedback.style.boxShadow = '0 5px 15px rgba(0,0,0,0.2)';
+                        feedback.style.zIndex = '1000';
+                        feedback.style.transform = 'translateY(100px)';
+                        feedback.style.opacity = '0';
+                        feedback.style.transition = 'all 0.3s ease';
+                        feedback.textContent = 'Message envoyé avec succès !';
+                        
+                        document.body.appendChild(feedback);
+                        
+                        setTimeout(() => {
+                            feedback.style.transform = 'translateY(0)';
+                            feedback.style.opacity = '1';
+                        }, 10);
+                        
+                        setTimeout(() => {
+                            feedback.style.transform = 'translateY(100px)';
+                            feedback.style.opacity = '0';
+                            setTimeout(() => {
+                                feedback.remove();
+                            }, 300);
+                        }, 3000);
+                    }, 1000);
+                }, 1500);
+            });
+        });
+        
+        // Header Scroll Effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+        
+        // Smooth Scrolling for Anchor Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Initialize animations on scroll
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('section, .product-card, .service-card, .blog-card');
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.2;
+                
+                if (elementPosition < screenPosition) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        }
+        
+        // Set initial state for animations
+        document.querySelectorAll('section, .product-card, .service-card, .blog-card').forEach(element => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(20px)';
+            element.style.transition = 'all 0.6s ease';
+        });
+        
+        // Run once on load
+        animateOnScroll();
+        
+        // Run on scroll
+        window.addEventListener('scroll', animateOnScroll);
     </script>
 </body>
 </html>
